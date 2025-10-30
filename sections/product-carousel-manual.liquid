@@ -1,0 +1,382 @@
+{%- assign sid = section.id | replace: '_', '' | downcase -%}
+
+{% style %}
+  /* ===== CONTÊINER / FUNDOS ===== */
+  .pcm-{{ sid }}{padding:0;background:{{ section.settings.section_bg }};text-align:center}
+  .pcm-inner-{{ sid }}{padding:0}
+
+  /* ===== TÍTULO ===== */
+  .pcm-headbar-{{ sid }}{background:{{ section.settings.header_bg }};border-radius:10px;padding:14px 12px;margin:0 auto 16px;max-width:1320px}
+  .pcm-head-{{ sid }}{display:flex;align-items:center;justify-content:center;gap:20px;color:{{ section.settings.header_text_color }}}
+  .pcm-line-{{ sid }}{width:75px;height:1px;background:{{ section.settings.header_line_color }}}
+  .pcm-title-{{ sid }}{margin:0;font-size:24px;font-weight:700;color:{{ section.settings.header_text_color }}}
+
+  /* ===== “SUPERFÍCIE” ===== */
+  .pcm-surface-{{ sid }}{background:{{ section.settings.cards_bg }};border-radius:14px;padding:18px 10px 22px;margin:0 auto 14px;max-width:1320px}
+
+  /* ===== TRILHO ===== */
+  .pcm-track-{{ sid }}{display:flex;flex-wrap:nowrap;gap:20px;justify-content:center;overflow:hidden}
+
+  /* ===== CARD ===== */
+  .pcm-card-{{ sid }}{
+    flex:0 0 182px;width:182px;height:392px;
+    display:flex;flex-direction:column;align-items:center;
+    border:1px solid #e6e6e6;background:#fff;border-radius:8px;overflow:hidden;position:relative
+  }
+  .pcm-imgbox-{{ sid }}{width:172px;height:172px;margin:10px auto 0;background:#f5f5f5;overflow:hidden;border-radius:6px}
+  .pcm-imgbox-{{ sid }} img{width:100%;height:100%;object-fit:cover}
+
+  /* badge de desconto */
+  .pcm-badge-{{ sid }}{
+    position:absolute;top:12px;left:12px;width:56px;height:30px;border-radius:6px;
+    background:#FA2929;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;
+    font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;line-height:1
+  }
+
+  /* ===== BODY ===== */
+  .pcm-body-{{ sid }}{padding:12px 16px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;flex-grow:1}
+  .pcm-name-{{ sid }}{font-size:16px;font-weight:700;color:#000;margin:6px 0 10px}
+  .pcm-pricewrap-{{ sid }}{margin-bottom:10px}
+  .pcm-compare-{{ sid }}{text-decoration:line-through;font-size:14px;color:#999;margin-bottom:4px}
+  .pcm-price-{{ sid }}{font-size:16px;font-weight:700;color:#000}
+  .pcm-descbox-{{ sid }}{height:114px;overflow:hidden;margin-bottom:16px}
+  .pcm-desc-{{ sid }}{font-size:14px;color:#666}
+  .pcm-btn-{{ sid }}{width:150px;height:36px;background:#414141;color:#fff;border:none;border-radius:4px;text-decoration:none;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s}
+  .pcm-btn-{{ sid }}:hover{background:#333}
+
+  /* ===== DOTS ===== */
+  .pcm-dotsbar-{{ sid }}{width:100%;background:{{ section.settings.dots_bg }};padding:10px 0}
+  .pcm-dots-{{ sid }}{display:flex;justify-content:center;gap:8px;margin:0 auto}
+  .pcm-dot-{{ sid }}{
+    width:5px;height:5px;
+    background:{{ section.settings.dots_color }};
+    border:none;border-radius:2.5px;cursor:pointer;padding:0;transition:all .15s
+  }
+  .pcm-dot-{{ sid }}.is-active{
+    width:14px;height:5px;
+    background:{{ section.settings.dots_active_color }};
+  }
+
+  /* ===== RESPONSIVO ===== */
+  @media (max-width:749px){
+    .pcm-title-{{ sid }}{font-size:18px}
+    .pcm-line-{{ sid }}{width:40px}
+
+    .pcm-surface-{{ sid }}{
+    padding: 18px 0 22px 12px;
+    overflow: hidden;
+  }
+
+  /* Track com scroll horizontal visível */
+  .pcm-track-{{ sid }}{
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 20px;
+    /* Esconde a scrollbar mas mantém funcionalidade */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .pcm-track-{{ sid }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Cards no mobile - largura fixa menor */
+  .pcm-card-{{ sid }}{
+    flex: 0 0 260px;
+    width: 260px;
+    scroll-snap-align: start;
+  }
+
+  .pcm-imgbox-{{ sid }}{
+    width: 250px;
+    height: 250px;
+  }
+  }
+{% endstyle %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+<section class="pcm-{{ sid }}" {{ section.shopify_attributes }}>
+  <div class="pcm-inner-{{ sid }}">
+    <div class="pcm-headbar-{{ sid }}">
+      <div class="pcm-head-{{ sid }}">
+        <div class="pcm-line-{{ sid }}"></div>
+        <h2 class="pcm-title-{{ sid }}">{{ section.settings.header }}</h2>
+        <div class="pcm-line-{{ sid }}"></div>
+      </div>
+    </div>
+
+    <div class="pcm-surface-{{ sid }}">
+      <div class="pcm-track-{{ sid }}" data-track>
+        {%- assign has_items = false -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'item' and block.settings.product != blank -%}
+            {%- assign has_items = true -%}
+            {%- assign p = block.settings.product -%}
+            {%- assign _cmp = p.compare_at_price_max | default: 0 -%}
+            {%- assign _price = p.price | default: 0 -%}
+
+            {%- assign show_disc = false -%}
+            {%- if _cmp and _price and _cmp > _price -%}
+              {%- assign show_disc = true -%}
+            {%- endif -%}
+
+            {%- assign disc_pct = 0 -%}
+            {%- if show_disc -%}
+              {%- assign diff = _cmp | minus: _price -%}
+              {%- if _cmp > 0 -%}
+                {%- assign disc_pct = diff | times: 100 | divided_by: _cmp | round -%}
+              {%- endif -%}
+            {%- endif -%}
+
+            <div class="pcm-card-{{ sid }}" data-card {{ block.shopify_attributes }}>
+              {%- if show_disc -%}
+                <div class="pcm-badge-{{ sid }}">
+                  <span aria-hidden="true">
+                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0.146393 4.981C0.240157 4.88726 0.367311 4.83461 0.499893 4.83461C0.632475 4.83461 0.759629 4.88726 0.853393 4.981L4.83339 8.962V0.5C4.83339 0.367392 4.88607 0.240215 4.97984 0.146447C5.07361 0.0526784 5.20078 0 5.33339 0C5.466 0 5.59318 0.0526784 5.68695 0.146447C5.78071 0.240215 5.83339 0.367392 5.83339 0.5V8.961L9.81339 4.981C9.89619 4.89858 10.0052 4.84775 10.1216 4.83734C10.2379 4.82692 10.3543 4.85759 10.4504 4.924L10.5204 4.982C10.6141 5.07576 10.6668 5.20292 10.6668 5.3355C10.6668 5.46808 10.6141 5.59524 10.5204 5.689L5.68739 10.521C5.68122 10.5272 5.67488 10.5332 5.66839 10.539L5.64139 10.561C5.62748 10.5724 5.61278 10.5827 5.59739 10.592L5.56739 10.609C5.54218 10.6235 5.51533 10.6349 5.48739 10.643C5.46142 10.6517 5.43461 10.6578 5.40739 10.661C5.38656 10.6645 5.36551 10.6665 5.34439 10.667H5.32339C5.30298 10.6666 5.28261 10.6649 5.26239 10.662L5.33439 10.667C5.28318 10.6671 5.23226 10.6593 5.18339 10.644L5.16039 10.636L5.14539 10.63C5.12901 10.6235 5.11299 10.6162 5.09739 10.608L5.08239 10.598L5.07239 10.594C5.05463 10.5828 5.0376 10.5704 5.02139 10.557L5.00439 10.542C4.99554 10.5353 4.98719 10.5279 4.97939 10.52L0.146393 5.688C0.0526577 5.59424 0 5.46708 0 5.3345C0 5.20192 0.0526577 5.07476 0.146393 4.981Z" fill="white"/>
+                    </svg>
+                  </span>
+                  <span>-{{ disc_pct }}%</span>
+                </div>
+              {%- endif -%}
+
+              <div class="pcm-imgbox-{{ sid }}">
+                {%- if p.featured_image -%}
+                  <img
+                    src="{{ p.featured_image | image_url: width: 344, height: 344, crop: 'center' }}"
+                    alt="{{ p.title | escape }}"
+                    loading="lazy"
+                    width="172"
+                    height="172"
+                  >
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag }}
+                {%- endif -%}
+              </div>
+
+              <div class="pcm-body-{{ sid }}">
+                <h3 class="pcm-name-{{ sid }}">{{ p.title }}</h3>
+                <div class="pcm-pricewrap-{{ sid }}">
+                  {%- if show_disc -%}
+                    <div class="pcm-compare-{{ sid }}">{{ _cmp | money }}</div>
+                  {%- endif -%}
+                  <div class="pcm-price-{{ sid }}">{{ _price | money }}</div>
+                </div>
+                <div class="pcm-descbox-{{ sid }}">
+                  <p class="pcm-desc-{{ sid }}">{{ p.description | strip_html | truncate: 150 }}</p>
+                </div>
+                <a class="pcm-btn-{{ sid }}" href="{{ p.url }}">{{ section.settings.button_text }}</a>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- unless has_items -%}
+          {%- for i in (1..6) -%}
+            <div class="pcm-card-{{ sid }}" data-card>
+              <div class="pcm-imgbox-{{ sid }}">{{ 'product-1' | placeholder_svg_tag }}</div>
+              <div class="pcm-body-{{ sid }}">
+                <h3 class="pcm-name-{{ sid }}">Product Title</h3>
+                <div class="pcm-pricewrap-{{ sid }}"><div class="pcm-price-{{ sid }}">R$ 99,00</div></div>
+                <div class="pcm-descbox-{{ sid }}"><p class="pcm-desc-{{ sid }}">Product description…</p></div>
+                <a class="pcm-btn-{{ sid }}" href="#">{{ section.settings.button_text }}</a>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+      </div>
+    </div>
+
+    <div class="pcm-dotsbar-{{ sid }}">
+      <div class="pcm-dots-{{ sid }}" data-dots></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    function initPCM(root) {
+      const track = root.querySelector('[data-track]');
+      if (!track) return;
+      const cards = Array.from(root.querySelectorAll('[data-card]'));
+      const dotsWrap = root.querySelector('[data-dots]');
+      let current = 1,
+        perPage = 6,
+        totalPages = 1;
+
+      function getPerPage() {
+        const windowWidth = window.innerWidth;
+        if (windowWidth < 750) {
+          return 1;
+        }
+        const container = track.clientWidth || root.clientWidth;
+        const cardW = 182,
+          gap = 20;
+        let fit = Math.floor((container + gap) / (cardW + gap));
+        if (fit < 1) fit = 1;
+        if (fit > 6) fit = 6;
+        return fit;
+      }
+
+      function renderDots() {
+        dotsWrap.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+          const b = document.createElement('button');
+          b.className = 'pcm-dot-{{ sid }}' + (i === current ? ' is-active' : '');
+          b.addEventListener('click', () => show(i));
+          dotsWrap.appendChild(b);
+        }
+      }
+
+      {% comment %} function show(page) {
+        current = page;
+        const start = (page - 1) * perPage;
+        const end = start + perPage;
+
+        if (window.innerWidth < 750 && cards[start]) {
+          const cardWidth = 260 + 20; // largura do card + gap
+          track.scrollTo({
+            left: start * cardWidth,
+            behavior: 'smooth',
+          });
+        }
+
+        cards.forEach((el, idx) => {
+          el.style.display = idx >= start && idx < end ? 'flex' : 'none';
+        });
+        Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('is-active', i === page - 1));
+      } {% endcomment %}
+      function show(page) {
+        current = page;
+        const start = (page - 1) * perPage;
+        const end = start + perPage;
+
+        // No mobile, faz scroll mas NÃO esconde cards
+        if (window.innerWidth < 750) {
+          if (cards[start]) {
+            const cardWidth = 260 + 20; // largura do card + gap
+            track.scrollTo({
+              left: start * cardWidth,
+              behavior: 'smooth',
+            });
+          }
+          // ⚠️ NÃO esconde cards no mobile - REMOVA a linha abaixo do if
+        } else {
+          // Desktop/tablet: esconde cards
+          cards.forEach((el, idx) => {
+            el.style.display = idx >= start && idx < end ? 'flex' : 'none';
+          });
+        }
+
+        Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('is-active', i === page - 1));
+      }
+
+      function rebuild() {
+        perPage = getPerPage();
+        totalPages = Math.max(1, Math.ceil(cards.length / perPage));
+        if (current > totalPages) current = totalPages;
+
+        // No mobile, garante que todos os cards estão visíveis
+        if (window.innerWidth < 750) {
+          cards.forEach(el => el.style.display = 'flex');
+        }
+
+        renderDots();
+        show(current);
+      }
+
+      let sx = 0,
+        dx = 0;
+      root.addEventListener(
+        'touchstart',
+        (e) => {
+          sx = e.touches[0].clientX;
+        },
+        { passive: true }
+      );
+      root.addEventListener(
+        'touchmove',
+        (e) => {
+          dx = e.touches[0].clientX - sx;
+        },
+        { passive: true }
+      );
+      root.addEventListener('touchend', () => {
+        if (Math.abs(dx) > 40) dx < 0 ? show(Math.min(current + 1, totalPages)) : show(Math.max(current - 1, 1));
+        sx = dx = 0;
+      });
+
+      root.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') show(Math.min(current + 1, totalPages));
+        if (e.key === 'ArrowLeft') show(Math.max(current - 1, 1));
+      });
+      root.setAttribute('tabindex', '0');
+
+      rebuild();
+      const onResize = () => {
+        const p = getPerPage();
+        if (p !== perPage) {
+          rebuild();
+        }
+      };
+      window.addEventListener('resize', onResize, { passive: true });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.pcm-{{ sid }}').forEach(initPCM);
+    });
+
+    document.addEventListener('shopify:section:load', (e) => {
+      const el = e.target.querySelector('.pcm-{{ sid }}');
+      if (el) initPCM(el);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Prod Carousel Manual",
+  "max_blocks": 50,
+  "settings": [
+    { "type": "text", "id": "header", "label": "Header", "default": "Confira as Novidades" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Ver produto" },
+
+    { "type": "header", "content": "Cores" },
+    { "type": "color", "id": "section_bg", "label": "Fundo do componente", "default": "#FFFFFF" },
+    { "type": "color", "id": "header_bg", "label": "Fundo da faixa do título", "default": "#FFFFFF" },
+    { "type": "color", "id": "header_text_color", "label": "Cor do texto do título", "default": "#000000" },
+    { "type": "color", "id": "header_line_color", "label": "Cor das linhas laterais", "default": "#000000" },
+    { "type": "color", "id": "cards_bg", "label": "Fundo atrás dos cards", "default": "#FFFFFF" },
+    { "type": "color", "id": "dots_bg", "label": "Fundo da faixa dos dots", "default": "#FFFFFF" },
+    { "type": "color", "id": "dots_color", "label": "Cor dos pontos inativos", "default": "rgba(0,0,0,0.4)" },
+    { "type": "color", "id": "dots_active_color", "label": "Cor dos pontos ativos", "default": "#000000" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Product",
+      "settings": [{ "type": "product", "id": "product", "label": "Select product" }]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Prod Carousel Manual",
+      "blocks": [
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -60,7 +61,9 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/9a2207441a473447b1f628ec4f6606422482db9b.jpg",
         "media_type_2": "image",
+        "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -84,203 +87,347 @@
         "padding-block-end": 72
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "features_marquee_image_text_gmwKN4": {
+      "type": "features-marquee-image-text",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "feature_yKMEdj": {
+          "type": "feature",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
+            "image": "shopify://shop_images/inbox.png",
+            "alt": "Ícone",
+            "text": "Entrega rápida"
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "feature_8YBPaA": {
+          "type": "feature",
           "settings": {
-            "product_card_gap": 4,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
+            "image": "shopify://shop_images/truck.png",
+            "alt": "Ícone",
+            "text": "Frete grátis"
+          }
+        },
+        "feature_qB7Gpp": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/divide.png",
+            "alt": "Ícone",
+            "text": "Descontos"
+          }
+        },
+        "feature_EmgzmK": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/dollar-sign.png",
+            "alt": "Ícone",
+            "text": "Pague com cartão"
+          }
         }
       },
-      "name": "Featured collection",
+      "block_order": [
+        "feature_yKMEdj",
+        "feature_8YBPaA",
+        "feature_qB7Gpp",
+        "feature_EmgzmK"
+      ],
+      "name": "Features Marquee (CSS Scroll)",
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "color_scheme": "",
+        "gap_between_elements": 28,
+        "mobile_speed": 25
+      }
+    },
+    "collection_pills_zaej7m": {
+      "type": "collection-pills",
+      "name": "Collection Pills",
+      "settings": {
+        "collection_1": "bolsas",
+        "collection_2": "moda-praia",
+        "collection_3": "mochilas",
+        "collection_4": "malas",
+        "collection_5": "acessorios",
+        "alignment": "center",
+        "gap": 16,
+        "gap_mobile": 8,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "border_radius": 8,
+        "title_size": 16,
+        "title_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30,
+        "placeholder_bg_color": "#f4f4f4"
+      }
+    },
+    "product_carousel_manual_DUBgXJ": {
+      "type": "product-carousel-manual",
+      "blocks": {
+        "item_aK68Uh": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_hARjJJ": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_VVMDDe": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_FH4jCY": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_j7B9rm": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_ejJ4ta": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        }
+      },
+      "block_order": [
+        "item_aK68Uh",
+        "item_hARjJJ",
+        "item_VVMDDe",
+        "item_FH4jCY",
+        "item_j7B9rm",
+        "item_ejJ4ta"
+      ],
+      "name": "Prod Carousel Manual",
+      "settings": {
+        "header": "Confira as Novidades",
+        "button_text": "Ver produto",
+        "section_bg": "#ffffff",
+        "header_bg": "#ffffff",
+        "header_text_color": "#000000",
+        "header_line_color": "#000000",
+        "cards_bg": "#ffffff",
+        "dots_bg": "#e71b1b",
+        "dots_color": "#00000066",
+        "dots_active_color": "#000000"
+      }
+    },
+    "product_carousel_manual_Y6rLFC": {
+      "type": "product-carousel-manual",
+      "blocks": {
+        "item_YeT6CG": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_C8Hfw8": {
+          "type": "item",
+          "settings": {
+            "product": "evening-clutch"
+          }
+        },
+        "item_DBPnfx": {
+          "type": "item",
+          "settings": {
+            "product": "kit-bolsa-bella-paula"
+          }
+        },
+        "item_hXjybj": {
+          "type": "item",
+          "settings": {
+            "product": "sling-belt-bag"
+          }
+        },
+        "item_xcqG67": {
+          "type": "item",
+          "settings": {
+            "product": "sling-belt-bag"
+          }
+        },
+        "item_Lgi4T9": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_biai8c": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        }
+      },
+      "block_order": [
+        "item_YeT6CG",
+        "item_C8Hfw8",
+        "item_DBPnfx",
+        "item_hXjybj",
+        "item_xcqG67",
+        "item_Lgi4T9",
+        "item_biai8c"
+      ],
+      "name": "Prod Carousel Manual",
+      "settings": {
+        "header": "Ofertas",
+        "button_text": "Ver produto",
+        "section_bg": "#90839f",
+        "header_bg": "#90839f",
+        "header_text_color": "#ffffff",
+        "header_line_color": "#ffffff",
+        "cards_bg": "#90839f",
+        "dots_bg": "#90839f",
+        "dots_color": "#00000066",
+        "dots_active_color": "#000000"
+      }
+    },
+    "product_carousel_manual_QkWgiN": {
+      "type": "product-carousel-manual",
+      "blocks": {
+        "item_RDAMpg": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_zP86EH": {
+          "type": "item",
+          "settings": {
+            "product": "evening-clutch"
+          }
+        },
+        "item_c74ANF": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_etFADn": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_UC4ytB": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_CT4hfx": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_eNXc4j": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_zkXANq": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        },
+        "item_wJPg7K": {
+          "type": "item",
+          "settings": {
+            "product": "weekender-duffel"
+          }
+        }
+      },
+      "block_order": [
+        "item_RDAMpg",
+        "item_zP86EH",
+        "item_c74ANF",
+        "item_etFADn",
+        "item_UC4ytB",
+        "item_CT4hfx",
+        "item_eNXc4j",
+        "item_zkXANq",
+        "item_wJPg7K"
+      ],
+      "name": "Prod Carousel Manual",
+      "settings": {
+        "header": "Mais Vendido",
+        "button_text": "Ver produto",
+        "section_bg": "#ffffff",
+        "header_bg": "#ffffff",
+        "header_text_color": "#000000",
+        "header_line_color": "#000000",
+        "cards_bg": "#ffffff",
+        "dots_bg": "#ffffff",
+        "dots_color": "#00000066",
+        "dots_active_color": "#000000"
+      }
+    },
+    "product_images_homepage_QQgyP6": {
+      "type": "product-images-homepage",
+      "blocks": {
+        "image_cTidR7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/dfdeab92a9589f58f7c05546bb343eba5c86d200.jpg"
+          }
+        },
+        "image_bkxUXW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/261375e503c615cc9776b34419dfc1c137184b9d.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_cTidR7",
+        "image_bkxUXW"
+      ],
+      "name": "Duo Images",
+      "settings": {
+        "bg_color": "#f5f5f5"
+      }
+    },
+    "cep_finder_F9RHMn": {
+      "type": "cep-finder",
+      "name": "CEP Finder",
+      "settings": {
+        "title": "Loja das Bolsas",
+        "subtitle": "perto de mim",
+        "placeholder": "Buscar por CEP",
+        "title_size": 32,
+        "subtitle_size": 24,
+        "title_size_mobile": 20,
+        "subtitle_size_mobile": 16,
+        "bg_color": "#ffffff",
+        "icon_color": "#000000",
+        "title_color": "#000000",
+        "subtitle_color": "#000000",
+        "input_bg": "#e5e5e5",
+        "input_text_color": "#000000",
+        "placeholder_color": "#666666",
+        "input_focus_color": "#000000",
+        "search_icon_color": "#000000"
       }
     }
   },
   "order": [
     "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "features_marquee_image_text_gmwKN4",
+    "collection_pills_zaej7m",
+    "product_carousel_manual_DUBgXJ",
+    "product_carousel_manual_Y6rLFC",
+    "product_carousel_manual_QkWgiN",
+    "product_images_homepage_QQgyP6",
+    "cep_finder_F9RHMn"
   ]
 }

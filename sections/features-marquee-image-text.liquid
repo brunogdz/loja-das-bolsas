@@ -1,0 +1,566 @@
+{% comment %}
+  {% comment %}
+    Features Marquee (Image + Text)
+    - Mobile: animação horizontal (marquee)
+    - Desktop: estático (sem animação)
+  {% endcomment %}
+
+  {% assign gap_between_elements = section.settings.gap_between_elements %}
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+  <features-marquee
+    class="features-marquee color-{{ section.settings.color_scheme }}"
+    style="{% render 'spacing-style', settings: section.settings %}; --marquee-gap: {{ gap_between_elements }}px; --icon-size: {{ section.settings.icon_size }}px; --marquee-speed: {{ section.settings.mobile_speed }}s;"
+    data-direction="{{ section.settings.movement_direction }}"
+    data-mobile-animate="{{ section.settings.mobile_animate }}"
+  >
+    <div class="fm__track" ref="track">
+      <div class="fm__content" ref="content">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'feature' %}
+              <div class="fm__item" {{ block.shopify_attributes }}>
+                {% if block.settings.image != blank %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 160
+                    | image_tag: widths: '80,120,160', class: 'fm__icon', alt: block.settings.alt
+                    | escape
+                  }}
+                {% endif %}
+                {% if block.settings.text != blank %}
+                  {% if block.settings.link != blank %}
+                    <a class="fm__text" href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+                  {% else %}
+                    <span class="fm__text">{{ block.settings.text }}</span>
+                  {% endif %}
+                {% endif %}
+              </div>
+              {% if section.settings.show_dividers and forloop.last == false %}
+                <span class="fm__divider" aria-hidden="true"></span>
+              {% endif %}
+            {% when 'divider' %}
+              <span class="fm__divider" aria-hidden="true" {{ block.shopify_attributes }}></span>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </features-marquee>
+
+  {% stylesheet %}
+    .features-marquee {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .features-marquee .fm__track {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .features-marquee .fm__content {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--marquee-gap);
+      white-space: nowrap;
+    }
+
+    .features-marquee .fm__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .features-marquee .fm__icon {
+      width: var(--icon-size);
+      height: var(--icon-size);
+      object-fit: contain;
+    }
+
+    .features-marquee .fm__text {
+      font: inherit;
+      white-space: nowrap;
+    }
+
+    .features-marquee .fm__divider {
+      display: inline-block;
+      width: 1px;
+      height: 22px;
+      background: currentColor;
+      opacity: 0.35;
+      margin: 0 6px;
+      border: 1px solid #000;
+    }
+
+    /* -------- Desktop (sem animação) -------- */
+    @media (min-width: 990px) {
+      .features-marquee .fm__content {
+        animation: none !important; /* garante sem animação no desktop */
+      }
+    }
+
+    /* -------- Mobile (com animação se habilitado) -------- */
+    @media (max-width: 989px) {
+      .features-marquee[data-mobile-animate='true'] .fm__content {
+        will-change: transform;
+        animation: fm-marquee var(--marquee-speed) linear infinite var(--dir, normal);
+      }
+    }
+
+    @keyframes fm-marquee {
+      from {
+        transform: translate3d(0, 0, 0);
+      }
+      to {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+  {% endstylesheet %}
+
+  <script>
+    class FeaturesMarquee extends HTMLElement {
+      connectedCallback() {
+        const content = this.querySelector('[ref="content"]');
+        if (!content) return;
+
+        // Direção
+        const dir = this.dataset.direction === 'reverse' ? 'reverse' : 'normal';
+        content.style.setProperty('--dir', dir);
+
+        // Só duplica no mobile quando a animação está ativa
+        const animate = this.dataset.mobileAnimate === 'true';
+
+        const setup = () => {
+          const isMobile = window.matchMedia('(max-width: 989px)').matches;
+          if (!isMobile || !animate) {
+            // Desktop: remove clones e pausa
+            this.cleanClones(content);
+            content.style.animationPlayState = 'paused';
+            return;
+          }
+          // Mobile: duplica para efeito contínuo
+          this.ensureClones(content);
+          content.style.animationPlayState = 'running';
+        };
+
+        setup();
+        window.addEventListener('resize', setup, { passive: true });
+      }
+
+      ensureClones(content) {
+        // já tem clones?
+        if (content.querySelector('[data-clone="true"]')) return;
+
+        const items = Array.from(content.children);
+        // Clona o conjunto para alcançar ~200% de largura (loop perfeito)
+        items.forEach((el) => {
+          const clone = el.cloneNode(true);
+          clone.setAttribute('data-clone', 'true');
+          content.appendChild(clone);
+        });
+      }
+
+      cleanClones(content) {
+        content.querySelectorAll('[data-clone="true"]').forEach((n) => n.remove());
+      }
+    }
+    customElements.define('features-marquee', FeaturesMarquee);
+  </script>
+
+  {% schema %}
+  {
+    "name": "Features Marquee T/I",
+    "disabled_on": { "groups": ["header", "footer"] },
+    "blocks": [
+      {
+        "type": "feature",
+        "name": "Feature (image + text)",
+        "settings": [
+          { "type": "image_picker", "id": "image", "label": "Ícone / Imagem" },
+          { "type": "text", "id": "alt", "label": "Alt da imagem", "default": "Ícone" },
+          { "type": "text", "id": "text", "label": "Texto", "default": "Entrega rápida" },
+          { "type": "url", "id": "link", "label": "Link (opcional)" }
+        ]
+      },
+      {
+        "type": "divider",
+        "name": "Divisor"
+      }
+    ],
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "Esquema de cores",
+        "default": "scheme-1"
+      },
+      {
+        "type": "header",
+        "content": "Layout e espaçamento"
+      },
+      {
+        "type": "range",
+        "id": "padding-block-start",
+        "label": "Padding superior",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "padding-block-end",
+        "label": "Padding inferior",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "gap_between_elements",
+        "label": "Espaço entre itens",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "icon_size",
+        "label": "Tamanho do ícone (px)",
+        "min": 12,
+        "max": 64,
+        "step": 1,
+        "default": 22
+      },
+      {
+        "type": "header",
+        "content": "Animação (somente mobile)"
+      },
+      {
+        "type": "checkbox",
+        "id": "mobile_animate",
+        "label": "Ativar animação no mobile",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "movement_direction",
+        "label": "Direção",
+        "options": [
+          { "value": "normal", "label": "Esquerda →" },
+          { "value": "reverse", "label": "Direita ←" }
+        ],
+        "default": "normal"
+      },
+      {
+        "type": "range",
+        "id": "mobile_speed",
+        "label": "Velocidade (segundos – menor = mais rápido)",
+        "min": 8,
+        "max": 60,
+        "step": 1,
+        "default": 25
+      }
+    ],
+    "presets": [
+      {
+        "name": "Features Marquee (Image + Text)",
+        "category": "Banners",
+        "blocks": [
+          { "type": "feature", "settings": { "text": "Entrega rápida" } },
+          { "type": "divider" },
+          { "type": "feature", "settings": { "text": "Frete grátis" } },
+          { "type": "divider" },
+          { "type": "feature", "settings": { "text": "Descontos" } },
+          { "type": "divider" },
+          { "type": "feature", "settings": { "text": "Pague com cartão" } }
+        ]
+      }
+    ]
+  }
+  {% endschema %}
+{% endcomment %}
+{% comment %}
+  Features Marquee (Image + Text)
+  - Desktop: static centered
+  - Mobile: pure CSS infinite scroll (no JS)
+{% endcomment %}
+
+{% assign gap = section.settings.gap_between_elements %}
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<div
+  class="features-marquee color-{{ section.settings.color_scheme }}"
+  style="
+    --marquee-speed: {{ section.settings.mobile_speed | default: 25 }}s;
+    --marquee-gap: {{ gap | default: 24 }}px;
+    --icon-size: 22px;
+  "
+>
+  <div class="fm__wrapper">
+    {%- comment -%} Desktop layout (no animation) {%- endcomment -%}
+    <div class="fm__desktop">
+      {% for block in section.blocks %}
+        {% if block.type == 'feature' %}
+          <div class="fm__item" {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 160
+                | image_tag: widths: '80,120,160', class: 'fm__icon', alt: block.settings.alt
+              }}
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <span class="fm__text">{{ block.settings.text }}</span>
+            {% endif %}
+          </div>
+          {% if forloop.last == false %}
+            <span class="fm__divider"></span>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {%- comment -%} Mobile rail animation {%- endcomment -%}
+    <div class="fm__mobile">
+      <div class="rail">
+        <!-- Grupo 1 -->
+        <div class="rail__group">
+          {% for block in section.blocks %}
+            {% if block.type == 'feature' %}
+              <div class="slide">
+                {% if block.settings.image %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 160
+                    | image_tag: widths: '80,120,160', class: 'icon', alt: block.settings.alt
+                  }}
+                {% endif %}
+                {% if block.settings.text %}
+                  <span class="text">{{ block.settings.text }}</span>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Grupo 2 (clone) -->
+        <div class="rail__group" aria-hidden="true">
+          {% for block in section.blocks %}
+            {% if block.type == 'feature' %}
+              <div class="slide">
+                {% if block.settings.image %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 160
+                    | image_tag: widths: '80,120,160', class: 'icon', alt: block.settings.alt
+                  }}
+                {% endif %}
+                {% if block.settings.text %}
+                  <span class="text">{{ block.settings.text }}</span>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .features-marquee {
+    width: 100%;
+    overflow: hidden;
+  }
+  .fm__wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+  }
+
+  /* === Desktop === */
+  .fm__desktop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: var(--marquee-gap, 28px);
+  }
+  .fm__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  /* Add divider AFTER each desktop item */
+  .fm__item::after {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 22px;
+    background: currentColor;
+    opacity: 0.3;
+    margin-left: 14px;
+    vertical-align: middle;
+  }
+
+  /* Optional — remove last divider if you ever want */
+  .fm__item:last-child::after {
+    display: inline-block; /* keep visible — comment this line to hide it */
+  }
+
+  .fm__icon {
+    width: var(--icon-size, 22px);
+    height: var(--icon-size, 22px);
+    object-fit: contain;
+  }
+
+  /* Hide mobile version on desktop */
+  .fm__mobile {
+    display: none;
+  }
+
+  /* === Mobile infinite scroll === */
+  @media (max-width: 989px) {
+    .fm__desktop {
+      display: none;
+    }
+    .fm__mobile {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .fm__mobile .rail {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      align-items: center;
+      gap: 0;
+      will-change: transform;
+      animation: fm-scroll var(--marquee-speed, 25s) linear infinite;
+    }
+
+    .fm__mobile .rail__group {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      gap: var(--marquee-gap, 24px);
+      align-items: center;
+    }
+
+    .fm__mobile .slide {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex: 0 0 auto;
+      white-space: nowrap;
+      padding: 0 2px;
+      position: relative;
+    }
+
+    .fm__mobile .icon {
+      display: inline-block;
+      width: var(--icon-size, 22px);
+      height: var(--icon-size, 22px);
+      max-width: none;
+      object-fit: contain;
+      vertical-align: middle;
+    }
+
+    .fm__mobile .text {
+      white-space: nowrap;
+      font: inherit;
+      line-height: 1;
+    }
+
+    /* Divider AFTER every mobile item (including last) */
+    .fm__mobile .slide::after {
+      content: '';
+      display: inline-block;
+      width: 1px;
+      height: 22px;
+      background: currentColor;
+      opacity: 0.35;
+      margin-left: 14px;
+      vertical-align: middle;
+    }
+
+
+  }
+
+  /* Infinite loop for one full group width */
+  @keyframes fm-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Features Marquee I/T",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color Scheme", "default": "scheme-1" },
+    {
+      "type": "range",
+      "id": "gap_between_elements",
+      "label": "Gap between elements",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_speed",
+      "label": "Animation Speed (seconds)",
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "default": 25
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Icon / Image" },
+        { "type": "text", "id": "alt", "label": "Alt Text", "default": "Ícone" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Entrega rápida" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features Marquee (CSS Scroll)",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "Entrega rápida" } },
+        { "type": "feature", "settings": { "text": "Frete grátis" } },
+        { "type": "feature", "settings": { "text": "Descontos" } },
+        { "type": "feature", "settings": { "text": "Pague com cartão" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
