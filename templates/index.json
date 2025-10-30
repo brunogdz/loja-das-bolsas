@@ -61,6 +61,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/9a2207441a473447b1f628ec4f6606422482db9b.jpg",
         "media_type_2": "image",
         "link": "",
         "open_in_new_tab": false,
@@ -297,6 +298,12 @@
             "product": "weekender-duffel"
           }
         },
+        "item_zP86EH": {
+          "type": "item",
+          "settings": {
+            "product": "evening-clutch"
+          }
+        },
         "item_c74ANF": {
           "type": "item",
           "settings": {
@@ -342,6 +349,7 @@
       },
       "block_order": [
         "item_RDAMpg",
+        "item_zP86EH",
         "item_c74ANF",
         "item_etFADn",
         "item_UC4ytB",
@@ -363,6 +371,53 @@
         "dots_color": "#00000066",
         "dots_active_color": "#000000"
       }
+    },
+    "product_images_homepage_QQgyP6": {
+      "type": "product-images-homepage",
+      "blocks": {
+        "image_cTidR7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/dfdeab92a9589f58f7c05546bb343eba5c86d200.jpg"
+          }
+        },
+        "image_bkxUXW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/261375e503c615cc9776b34419dfc1c137184b9d.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_cTidR7",
+        "image_bkxUXW"
+      ],
+      "name": "Duo Images",
+      "settings": {
+        "bg_color": "#f5f5f5"
+      }
+    },
+    "cep_finder_F9RHMn": {
+      "type": "cep-finder",
+      "name": "CEP Finder",
+      "settings": {
+        "title": "Loja das Bolsas",
+        "subtitle": "perto de mim",
+        "placeholder": "Buscar por CEP",
+        "title_size": 32,
+        "subtitle_size": 24,
+        "title_size_mobile": 20,
+        "subtitle_size_mobile": 16,
+        "bg_color": "#ffffff",
+        "icon_color": "#000000",
+        "title_color": "#000000",
+        "subtitle_color": "#000000",
+        "input_bg": "#e5e5e5",
+        "input_text_color": "#000000",
+        "placeholder_color": "#666666",
+        "input_focus_color": "#000000",
+        "search_icon_color": "#000000"
+      }
     }
   },
   "order": [
@@ -371,6 +426,8 @@
     "collection_pills_zaej7m",
     "product_carousel_manual_DUBgXJ",
     "product_carousel_manual_Y6rLFC",
-    "product_carousel_manual_QkWgiN"
+    "product_carousel_manual_QkWgiN",
+    "product_images_homepage_QQgyP6",
+    "cep_finder_F9RHMn"
   ]
 }

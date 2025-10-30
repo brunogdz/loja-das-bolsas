@@ -1,8 +1,16 @@
-
-
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  style="
+    {% if section.settings.bg_image %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2640 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% elsif section.settings.custom_bg_color != blank %}
+      background-color: {{ section.settings.custom_bg_color }};
+    {% endif %}
+  "
 >
   {% liquid
     assign total_blocks = section.blocks.size
@@ -164,6 +172,22 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Background customization"
+    },
+    {
+      "type": "color",
+      "id": "custom_bg_color",
+      "label": "Custom background color",
+      "info": "Overrides color scheme background. Leave empty to use color scheme."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image",
+      "info": "Overrides background color if set."
     },
     {
       "type": "header",
