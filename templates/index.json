@@ -16,7 +16,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
+            "text": "<p>Bolsas e muito mais</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -61,7 +61,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/9a2207441a473447b1f628ec4f6606422482db9b.jpg",
+        "image_1": "shopify://shop_images/WhatsApp_Image_2025-11-03_at_20.05.17_3_7c4c9fe6-da97-44b8-b244-aa02c69c0312.jpg",
         "media_type_2": "image",
         "link": "",
         "open_in_new_tab": false,
