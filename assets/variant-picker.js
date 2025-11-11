@@ -176,6 +176,24 @@ export default class VariantPicker extends Component {
               })
             );
           }
+
+          try {
+            const productObj = JSON.parse(textContent);
+            // tenta deduzir a variante selecionada do JSON retornado
+            const selectedVariant =
+              productObj?.selected_variant ||
+              // @ts-ignore
+              (productObj?.variants || []).find(v => String(v.id) === new URL(location.href).searchParams.get('variant')) ||
+              (productObj?.variants || [])[0];
+
+            if (selectedVariant?.id) {
+              document.dispatchEvent(new CustomEvent('variant:update', {
+                detail: { variant: selectedVariant }
+              }));
+            }
+          } catch (e) {
+            console.warn('[DEBUG] Falha ao emitir variant:update público:', e);
+          }
         }
       })
       .catch((error) => {
