@@ -278,7 +278,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                    "text": "<p>LOJA 1 -  Rua do Trabalho, 65, Centro - Guarapari/ES. Com o comando do RILDO E SUELY, já são mais de 20 anos vendendo milhares de bolsas.</p><p>LOJA 2 - Rua Pedro Caetano, 94, Centro - Guarapari/ES. Com o comando da ISABEL CRISTINA, tem sido referência em sofisticação e beleza. </p><p>LOJA 3 - Rua Francisco Vieira Passos, 90, Muquiçaba - Guarapari/ES. Com o comando da PATRÍCIA, é a loja mais nova, e vem se desenvolvendo com o melhor das lojas 1 e 2. </p><p></p><p></p><p></p><p></p><p></p><p></p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
