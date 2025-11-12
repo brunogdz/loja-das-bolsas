@@ -198,8 +198,8 @@
                 "text_9BpeYR": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>A Loja das Bolsas está no mercado há 20 anos, fazendo história em Guarapari/ES. Somos uma família, e temos nos destacado pela nossa variedade de produtos, ótimos preços, e atendimento com empatia. </p>",
-                    "width": "100%",
+                    "text": "<p>A Loja das Bolsas está no mercado há 20 anos, fazendo história em Guarapari/ES. Somos uma família e temos nos destacado pela nossa variedade de produtos, ótimos preços, e atendimento com empatia. </p><p>E ficamos felizes de ter você aqui!</p>",
+                    "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
                     "type_preset": "rte",
