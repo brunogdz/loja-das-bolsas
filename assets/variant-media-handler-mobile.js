@@ -10,7 +10,8 @@ class VariantMediaHandlerMobile {
     this.dotsContainer = null;
     this.thumbnailsContainer = null;
     this.isUpdating = false;
-    
+    this.isInitialized = false;
+
     console.log('[VariantMedia] 🚀 Constructor initialized');
     this.init();
   }
@@ -25,19 +26,21 @@ class VariantMediaHandlerMobile {
 
   setup() {
     console.log('[VariantMedia] 🔧 Setup started');
-    
+
     this.loadDataFromJSON();
     this.mediaGallery = document.querySelector('.variant-media-gallery--miniaturas');
-    
+
     console.log('[VariantMedia] 📦 Gallery element:', this.mediaGallery ? '✅ Found' : '❌ Not found');
-    
+
     if (!this.mediaGallery) return;
 
     this.createCarouselStructure();
     this.setupVariantListeners();
+    this.setupMorphProtection(); // ✅ NOVO: Protege contra morph do tema
     this.loadInitialVariant();
     this.setupScrollHandlers();
-    
+
+    this.isInitialized = true;
     console.log('[VariantMedia] ✅ Setup complete');
   }
 
@@ -52,7 +55,7 @@ class VariantMediaHandlerMobile {
       const data = JSON.parse(dataScript.textContent.trim());
       this.variantData = data.variants || [];
       this.productMedia = data.media || [];
-      
+
       console.log('[VariantMedia] 📊 Data loaded:', {
         variants: this.variantData.length,
         media: this.productMedia.length,
@@ -69,7 +72,7 @@ class VariantMediaHandlerMobile {
 
   createCarouselStructure() {
     console.log('[VariantMedia] 🏗️ Creating carousel structure...');
-    
+
     const noscript = this.mediaGallery.querySelector('noscript');
     if (noscript) noscript.remove();
     this.mediaGallery.innerHTML = '';
@@ -102,25 +105,98 @@ class VariantMediaHandlerMobile {
     }
   }
 
-  setupVariantListeners() {
-    console.log('[VariantMedia] 👂 Setting up variant listeners...');
-    
-    document.addEventListener('variant:update', (e) => {
-      console.log('[VariantMedia] 🔔 variant:update event received:', e.detail);
-      
-      if (e.detail?.variant?.id) {
-        console.log('[VariantMedia] ➡️ Calling updateMedia with ID:', e.detail.variant.id);
-        this.updateMedia(e.detail.variant.id);
-      } else {
-        console.warn('[VariantMedia] ⚠️ No variant ID in event detail');
+  // ✅ NOVO: Protege contra o morph do tema destruir a galeria
+  setupMorphProtection() {
+    console.log('[VariantMedia] 🛡️ Setting up morph protection...');
+
+    // Observa mudanças no DOM
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        // Se a galeria foi removida/modificada
+        if (mutation.type === 'childList') {
+          const gallery = document.querySelector('.variant-media-gallery--miniaturas');
+
+          if (gallery && gallery !== this.mediaGallery) {
+            console.warn('[VariantMedia] 🔄 Gallery was replaced by morph! Re-initializing...');
+            this.reinitialize();
+            break;
+          }
+        }
       }
     });
+
+    // Observa o parent da galeria
+    const parent = this.mediaGallery.parentElement;
+    if (parent) {
+      observer.observe(parent, {
+        childList: true,
+        subtree: true
+      });
+      console.log('[VariantMedia] ✅ Morph protection active');
+    }
+  }
+
+  // ✅ NOVO: Re-inicializa após morph
+  reinitialize() {
+    console.log('[VariantMedia] 🔄 Reinitializing after morph...');
+
+    this.isUpdating = false;
+    this.isInitialized = false;
+
+    // Aguarda o próximo frame para garantir que o DOM está estável
+    requestAnimationFrame(() => {
+      this.setup();
+    });
+  }
+
+  setupVariantListeners() {
+    console.log('[VariantMedia] 👂 Setting up variant listeners...');
+
+    const knownVariantIds = this.variantData.map(v => String(v.id));
+
+    const handleVariantEvent = (e) => {
+      const detail = e.detail || {};
+      console.log('[VariantMedia] 🔔 variant:update event received:', detail);
+
+      // Candidatos possíveis de ID de variante
+      const candidates = [
+        detail.variant?.id,
+        detail.resource?.id,
+        detail.resource?.variant_id,
+        detail.id,
+        detail.product?.selected_variant?.id,
+      ].filter(Boolean).map(String);
+
+      // Procura entre os candidatos algum que exista em this.variantData
+      let variantId = null;
+      for (const cand of candidates) {
+        if (knownVariantIds.includes(cand)) {
+          variantId = cand;
+          break;
+        }
+      }
+
+      if (!variantId) {
+        console.warn(
+          '[VariantMedia] ⚠️ No valid variant ID found in event. Candidates:',
+          candidates
+        );
+        return;
+      }
+
+      console.log('[VariantMedia] ➡️ Calling updateMedia with ID:', variantId);
+      this.updateMedia(variantId);
+    };
+
+    document.addEventListener('variant:update', handleVariantEvent);
+    document.addEventListener('variant:change', handleVariantEvent);
+    document.addEventListener('variant:selected', handleVariantEvent);
 
     const variantSelect = document.querySelector('select[name="id"]');
     if (variantSelect) {
       console.log('[VariantMedia] ✅ Select element found');
       variantSelect.addEventListener('change', (e) => {
-        const variantId = parseInt(e.target.value);
+        const variantId = String(e.target.value);
         console.log('[VariantMedia] 📝 Select changed to:', variantId);
         this.updateMedia(variantId);
       });
@@ -154,12 +230,12 @@ class VariantMediaHandlerMobile {
 
   loadInitialVariant() {
     console.log('[VariantMedia] 🎬 Loading initial variant...');
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     const variantId = urlParams.get('variant');
-    
+
     console.log('[VariantMedia] 🔍 URL variant param:', variantId);
-    
+
     if (variantId) {
       const variant = this.variantData.find(v => v.id === parseInt(variantId));
       if (variant) {
@@ -175,32 +251,42 @@ class VariantMediaHandlerMobile {
     }
   }
 
-  updateMedia(variantId) {
+  updateMedia(rawVariantId) {
+    const variantId = String(rawVariantId);
+
     console.log('[VariantMedia] ════════════════════════════════');
     console.log('[VariantMedia] 🔄 UPDATE MEDIA CALLED');
     console.log('[VariantMedia] Current variant ID:', this.currentVariantId);
     console.log('[VariantMedia] New variant ID:', variantId);
     console.log('[VariantMedia] Is updating?', this.isUpdating);
-    
-    // Previne updates simultâneos
+
+    // ✅ NOVO: Verifica se a galeria ainda existe
+    if (!document.body.contains(this.mediaGallery)) {
+      console.warn('[VariantMedia] ⚠️ Gallery no longer in DOM, waiting for reinit...');
+      return;
+    }
+
     if (this.isUpdating) {
       console.warn('[VariantMedia] ⚠️ Already updating, skipping...');
       return;
     }
-    
-    if (this.currentVariantId === variantId) {
+
+    if (String(this.currentVariantId) === variantId) {
       console.warn('[VariantMedia] ⚠️ Same variant, skipping...');
       return;
     }
-    
+
     this.isUpdating = true;
     this.currentVariantId = variantId;
     this.currentSlideIndex = 0;
-    
-    const variant = this.variantData.find(v => v.id === variantId);
-    
+
+    const variant = this.variantData.find((v) => String(v.id) === variantId);
+
     if (!variant) {
-      console.error('[VariantMedia] ❌ Variant not found in data!');
+      console.error('[VariantMedia] ❌ Variant not found in data!', {
+        wanted: variantId,
+        available: this.variantData.map(v => v.id),
+      });
       this.isUpdating = false;
       return;
     }
@@ -213,13 +299,12 @@ class VariantMediaHandlerMobile {
     });
 
     const sortedMedia = this.buildSortedMediaArray(variant);
-    
+
     console.log('[VariantMedia] 📸 Sorted media array:', {
       total: sortedMedia.length,
       sources: sortedMedia.map(m => m.source)
     });
-    
-    // CRÍTICO: Se não há mídia, mostra erro visual
+
     if (sortedMedia.length === 0) {
       console.error('[VariantMedia] ❌ No media found!');
       this.showEmptyState();
@@ -227,17 +312,15 @@ class VariantMediaHandlerMobile {
       return;
     }
 
-    // Limpa estado anterior
     console.log('[VariantMedia] 🧹 Clearing carousel...');
     this.clearCarousel();
 
-    // Aguarda um frame antes de renderizar
     console.log('[VariantMedia] ⏳ Waiting for animation frame...');
     requestAnimationFrame(() => {
       console.log('[VariantMedia] 🎨 Rendering carousel...');
-      
+
       this.updateCarousel(sortedMedia);
-      
+
       if (window.innerWidth >= 750) {
         console.log('[VariantMedia] 🖥️ Updating desktop thumbnails...');
         this.updateDesktopThumbnails(sortedMedia);
@@ -248,7 +331,7 @@ class VariantMediaHandlerMobile {
 
       console.log('[VariantMedia] 🎯 Going to slide 0...');
       this.goToSlide(0);
-      
+
       this.isUpdating = false;
       console.log('[VariantMedia] ✅ Update complete!');
       console.log('[VariantMedia] ════════════════════════════════');
@@ -278,9 +361,9 @@ class VariantMediaHandlerMobile {
     if (variant.customImages?.length > 0 && totalImages < MAX_IMAGES) {
       const remainingSlots = MAX_IMAGES - totalImages;
       const imagesToAdd = variant.customImages.slice(0, remainingSlots);
-      
+
       console.log(`[VariantMedia] ✓ Adding ${imagesToAdd.length} custom images`);
-      
+
       imagesToAdd.forEach((imageObj, index) => {
         mediaArray.push({
           id: `custom-${variant.id}-${index}`,
@@ -368,7 +451,7 @@ class VariantMediaHandlerMobile {
         slide.classList.add('active');
       }
     });
-    
+
     console.log('[VariantMedia] ✓ Carousel updated');
   }
 
@@ -411,7 +494,7 @@ class VariantMediaHandlerMobile {
     mediaArray.forEach((media, index) => {
       const li = document.createElement('li');
       const button = document.createElement('button');
-      
+
       button.type = 'button';
       button.className = 'variant-thumbnails__item';
       if (index === 0) button.classList.add('active');
@@ -425,7 +508,7 @@ class VariantMediaHandlerMobile {
       li.appendChild(button);
       thumbnailsList.appendChild(li);
     });
-    
+
     console.log('[VariantMedia] ✓ Thumbnails updated');
   }
 
@@ -465,7 +548,7 @@ class VariantMediaHandlerMobile {
       dot.addEventListener('click', () => this.goToSlide(i));
       this.dotsContainer.appendChild(dot);
     }
-    
+
     console.log('[VariantMedia] ✓ Dots updated');
   }
 
@@ -503,7 +586,7 @@ class VariantMediaHandlerMobile {
 
 if (typeof window !== 'undefined') {
   window.VariantMediaHandlerMobile = VariantMediaHandlerMobile;
-  
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => new VariantMediaHandlerMobile());
   } else {

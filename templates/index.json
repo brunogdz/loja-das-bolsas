@@ -215,7 +215,7 @@
         "header_text_color": "#000000",
         "header_line_color": "#000000",
         "cards_bg": "#ffffff",
-        "dots_bg": "#e71b1b",
+        "dots_bg": "#ffffff",
         "dots_color": "#00000066",
         "dots_active_color": "#000000"
       }

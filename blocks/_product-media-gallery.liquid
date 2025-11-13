@@ -84,10 +84,29 @@
       }
 
       // 1) Eventos comuns emitidos pelos temas
-      function onEvt(e) {
+      {% comment %} function onEvt(e) {
         const det = e.detail || {};
         const cand = det.variant || det.newVariant || det.product?.selected_variant || det;
         const id = parseInt(cand?.id || cand?.variant?.id || cand?.data?.id, 10);
+        if (id) handle(id);
+      } {% endcomment %}
+      function onEvt(e) {
+        const det = e.detail || {};
+        const source =
+          det.variant ||
+          det.resource ||
+          det.newVariant ||
+          det.product?.selected_variant ||
+          det;
+      
+        const id = parseInt(
+          source?.id ||
+          det.id ||
+          det.data?.variantId ||
+          det.data?.id,
+          10
+        );
+      
         if (id) handle(id);
       }
       document.addEventListener('variant:update', onEvt);
