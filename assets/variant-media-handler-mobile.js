@@ -77,8 +77,10 @@ class VariantMediaHandlerMobile {
     if (noscript) noscript.remove();
     this.mediaGallery.innerHTML = '';
 
+    const isMobile = window.innerWidth < 750;
+
     // Desktop: Thumbnails
-    if (window.innerWidth >= 750) {
+    if (!isMobile) {
       this.thumbnailsContainer = document.createElement('div');
       this.thumbnailsContainer.className = 'variant-thumbnails';
       const thumbnailsList = document.createElement('ul');
@@ -86,6 +88,8 @@ class VariantMediaHandlerMobile {
       this.thumbnailsContainer.appendChild(thumbnailsList);
       this.mediaGallery.appendChild(this.thumbnailsContainer);
       console.log('[VariantMedia] 🖥️ Desktop thumbnails created');
+    } else {
+      this.thumbnailsContainer = null;
     }
 
     // Carousel
@@ -97,11 +101,13 @@ class VariantMediaHandlerMobile {
     this.mediaGallery.appendChild(this.carouselContainer);
 
     // Mobile: Dots
-    if (window.innerWidth < 750) {
+    if (isMobile) {
       this.dotsContainer = document.createElement('div');
       this.dotsContainer.className = 'variant-carousel__dots';
       this.mediaGallery.appendChild(this.dotsContainer);
       console.log('[VariantMedia] 📱 Mobile dots created');
+    } else {
+      this.dotsContainer = null;
     }
   }
 
@@ -142,6 +148,12 @@ class VariantMediaHandlerMobile {
 
     this.isUpdating = false;
     this.isInitialized = false;
+
+    // Limpa referências antigas
+    this.mediaGallery = null;
+    this.carouselContainer = null;
+    this.dotsContainer = null;
+    this.thumbnailsContainer = null;
 
     // Aguarda o próximo frame para garantir que o DOM está estável
     requestAnimationFrame(() => {
