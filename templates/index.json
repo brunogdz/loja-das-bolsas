@@ -61,7 +61,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/WhatsApp_Image_2025-11-03_at_20.05.17_3_7c4c9fe6-da97-44b8-b244-aa02c69c0312.jpg",
+        "image_1": "shopify://shop_images/rn-image_picker_lib_temp_5333ea63-4dae-43ae-8a10-cfe68c5cf8a5.jpg",
         "media_type_2": "image",
         "link": "",
         "open_in_new_tab": false,
@@ -164,31 +164,31 @@
         "item_aK68Uh": {
           "type": "item",
           "settings": {
-            "product": "weekender-duffel"
+            "product": "bolsa-termica-luxo"
           }
         },
         "item_hARjJJ": {
           "type": "item",
           "settings": {
-            "product": "weekender-duffel"
+            "product": "bolsa-festa"
           }
         },
         "item_VVMDDe": {
           "type": "item",
           "settings": {
-            "product": "weekender-duffel"
+            "product": "bolsa-viagem-tecido"
           }
         },
         "item_FH4jCY": {
           "type": "item",
           "settings": {
-            "product": "weekender-duffel"
+            "product": "kit-necessaries"
           }
         },
         "item_j7B9rm": {
           "type": "item",
           "settings": {
-            "product": "weekender-duffel"
+            "product": "cinto-plus"
           }
         },
         "item_ejJ4ta": {
@@ -244,7 +244,7 @@
         "item_hXjybj": {
           "type": "item",
           "settings": {
-            "product": "sling-belt-bag"
+            "product": "bolsa-bia"
           }
         },
         "item_xcqG67": {
@@ -289,102 +289,19 @@
         "dots_active_color": "#000000"
       }
     },
-    "product_carousel_manual_QkWgiN": {
-      "type": "product-carousel-manual",
-      "blocks": {
-        "item_RDAMpg": {
-          "type": "item",
-          "settings": {
-            "product": "weekender-duffel"
-          }
-        },
-        "item_zP86EH": {
-          "type": "item",
-          "settings": {
-            "product": "evening-clutch"
-          }
-        },
-        "item_c74ANF": {
-          "type": "item",
-          "settings": {
-            "product": "weekender-duffel"
-          }
-        },
-        "item_etFADn": {
-          "type": "item",
-          "settings": {
-            "product": "weekender-duffel"
-          }
-        },
-        "item_UC4ytB": {
-          "type": "item",
-          "settings": {
-            "product": "weekender-duffel"
-          }
-        },
-        "item_CT4hfx": {
-          "type": "item",
-          "settings": {
-            "product": "weekender-duffel"
-          }
-        },
-        "item_eNXc4j": {
-          "type": "item",
-          "settings": {
-            "product": "weekender-duffel"
-          }
-        },
-        "item_zkXANq": {
-          "type": "item",
-          "settings": {
-            "product": "weekender-duffel"
-          }
-        },
-        "item_wJPg7K": {
-          "type": "item",
-          "settings": {
-            "product": "weekender-duffel"
-          }
-        }
-      },
-      "block_order": [
-        "item_RDAMpg",
-        "item_zP86EH",
-        "item_c74ANF",
-        "item_etFADn",
-        "item_UC4ytB",
-        "item_CT4hfx",
-        "item_eNXc4j",
-        "item_zkXANq",
-        "item_wJPg7K"
-      ],
-      "name": "Prod Carousel Manual",
-      "settings": {
-        "header": "Mais Vendido",
-        "button_text": "Ver produto",
-        "section_bg": "#ffffff",
-        "header_bg": "#ffffff",
-        "header_text_color": "#000000",
-        "header_line_color": "#000000",
-        "cards_bg": "#ffffff",
-        "dots_bg": "#ffffff",
-        "dots_color": "#00000066",
-        "dots_active_color": "#000000"
-      }
-    },
     "product_images_homepage_QQgyP6": {
       "type": "product-images-homepage",
       "blocks": {
         "image_cTidR7": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/dfdeab92a9589f58f7c05546bb343eba5c86d200.jpg"
+            "image": "shopify://shop_images/rn-image_picker_lib_temp_a2ebf314-9028-44b1-8652-b83ac698e275.jpg"
           }
         },
         "image_bkxUXW": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/261375e503c615cc9776b34419dfc1c137184b9d.jpg"
+            "image": "shopify://shop_images/rn-image_picker_lib_temp_2e883c8b-327d-41ad-808d-25d915095d30.jpg"
           }
         }
       },
@@ -426,7 +343,6 @@
     "collection_pills_zaej7m",
     "product_carousel_manual_DUBgXJ",
     "product_carousel_manual_Y6rLFC",
-    "product_carousel_manual_QkWgiN",
     "product_images_homepage_QQgyP6",
     "cep_finder_F9RHMn"
   ]
