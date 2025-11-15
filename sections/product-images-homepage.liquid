@@ -1,4 +1,4 @@
-{%- assign sid = section.id | replace: '_', '' | downcase -%}
+{% comment %} {%- assign sid = section.id | replace: '_', '' | downcase -%}
 
 {% style %}
   /* ===== CONTÊINER ===== */
@@ -138,6 +138,289 @@
         },
         {
           "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} {% endcomment %}
+ {%- assign sid = section.id | replace: '_', '' | downcase -%}
+
+{% style %}
+  /* ===== CONTÊINER ===== */
+  .duo-{{ sid }} {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    {% if section.settings.bg_image %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2640 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% else %}
+      background: {{ section.settings.bg_color }};
+    {% endif %}
+  }
+
+  /* ===== WRAPPER DAS IMAGENS ===== */
+  .duo-wrapper-{{ sid }} {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    max-height: 528px;
+  }
+
+  /* ===== CARD DE IMAGEM (agora clicável) ===== */
+  .duo-card-{{ sid }} {
+    flex: 0 0 336px;
+    width: 336px;
+    height: 444px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .duo-card-{{ sid }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .duo-card-{{ sid }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .duo-card-{{ sid }}:hover img {
+    transform: scale(1.05);
+  }
+
+  /* ===== OVERLAY COM TÍTULO (opcional) ===== */
+  .duo-overlay-{{ sid }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: 24px 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .duo-card-{{ sid }}:hover .duo-overlay-{{ sid }} {
+    opacity: 1;
+  }
+
+  .duo-title-{{ sid }} {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* ===== RESPONSIVO MOBILE ===== */
+  @media (max-width: 749px) {
+    .duo-{{ sid }} {
+      padding: 20px 16px;
+    }
+
+    .duo-wrapper-{{ sid }} {
+      flex-direction: column;
+      gap: 16px;
+      max-height: none;
+    }
+
+    .duo-card-{{ sid }} {
+      flex: 0 0 auto;
+      width: 100%;
+      height: 178px;
+    }
+
+    .duo-title-{{ sid }} {
+      font-size: 16px;
+    }
+
+    .duo-overlay-{{ sid }} {
+      opacity: 1;
+    }
+  }
+
+  /* ===== RESPONSIVO TABLET ===== */
+  @media (min-width: 750px) and (max-width: 989px) {
+    .duo-card-{{ sid }} {
+      flex: 0 0 280px;
+      width: 280px;
+      height: 370px;
+    }
+  }
+{% endstyle %}
+
+<section class="duo-{{ sid }}" {{ section.shopify_attributes }}>
+  <div class="duo-wrapper-{{ sid }}">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'collection' -%}
+        {%- assign collection = block.settings.collection -%}
+        {%- assign custom_image = block.settings.custom_image -%}
+        
+        {%- if collection != blank -%}
+          <a 
+            href="{{ collection.url }}" 
+            class="duo-card-{{ sid }}" 
+            {{ block.shopify_attributes }}
+            aria-label="Ver coleção {{ collection.title }}"
+          >
+            {%- if custom_image -%}
+              <img
+                src="{{ custom_image | image_url: width: 672 }}"
+                alt="{{ custom_image.alt | default: collection.title | escape }}"
+                loading="lazy"
+                width="336"
+                height="444"
+              >
+            {%- elsif collection.image -%}
+              <img
+                src="{{ collection.image | image_url: width: 672 }}"
+                alt="{{ collection.image.alt | default: collection.title | escape }}"
+                loading="lazy"
+                width="336"
+                height="444"
+              >
+            {%- elsif collection.products.first.featured_image -%}
+              <img
+                src="{{ collection.products.first.featured_image | image_url: width: 672 }}"
+                alt="{{ collection.title | escape }}"
+                loading="lazy"
+                width="336"
+                height="444"
+              >
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {%- endif -%}
+
+            {%- if block.settings.show_title -%}
+              <div class="duo-overlay-{{ sid }}">
+                <h3 class="duo-title-{{ sid }}">
+                  {%- if block.settings.custom_title != blank -%}
+                    {{ block.settings.custom_title }}
+                  {%- else -%}
+                    {{ collection.title }}
+                  {%- endif -%}
+                </h3>
+              </div>
+            {%- endif -%}
+          </a>
+        {%- else -%}
+          <div class="duo-card-{{ sid }}" {{ block.shopify_attributes }}>
+            {%- if custom_image -%}
+              <img
+                src="{{ custom_image | image_url: width: 672 }}"
+                alt="{{ custom_image.alt | escape }}"
+                loading="lazy"
+                width="336"
+                height="444"
+              >
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {%- endif -%}
+            
+            {%- if block.settings.show_title -%}
+              <div class="duo-overlay-{{ sid }}" style="opacity: 1;">
+                <h3 class="duo-title-{{ sid }}">
+                  {%- if block.settings.custom_title != blank -%}
+                    {{ block.settings.custom_title }}
+                  {%- else -%}
+                    Selecione uma coleção
+                  {%- endif -%}
+                </h3>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Duo Collections Flex",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Cor de fundo",
+      "default": "#F5F5F5"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Imagem de fundo (sobrescreve a cor)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Coleção",
+          "info": "Selecione a coleção que será aberta ao clicar"
+        },
+        {
+          "type": "header",
+          "content": "Imagem"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Imagem customizada (opcional)",
+          "info": "Se não fornecida, usa a imagem da coleção automaticamente"
+        },
+        {
+          "type": "header",
+          "content": "Título"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_title",
+          "label": "Mostrar título no hover",
+          "default": true,
+          "info": "No mobile, o título aparece sempre"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Título customizado (opcional)",
+          "info": "Se vazio, usa o nome da coleção"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Duo Collections Flex",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
         }
       ]
     }

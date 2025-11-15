@@ -292,22 +292,28 @@
     "product_images_homepage_QQgyP6": {
       "type": "product-images-homepage",
       "blocks": {
-        "image_cTidR7": {
-          "type": "image",
+        "collection_XJ3gdm": {
+          "type": "collection",
           "settings": {
-            "image": "shopify://shop_images/rn-image_picker_lib_temp_a2ebf314-9028-44b1-8652-b83ac698e275.jpg"
+            "collection": "acessorios",
+            "custom_image": "shopify://shop_images/rn-image_picker_lib_temp_0fedd66b-2530-4221-82d8-6d7f3e630f20.jpg",
+            "show_title": true,
+            "custom_title": ""
           }
         },
-        "image_bkxUXW": {
-          "type": "image",
+        "collection_gbwiw4": {
+          "type": "collection",
           "settings": {
-            "image": "shopify://shop_images/rn-image_picker_lib_temp_2e883c8b-327d-41ad-808d-25d915095d30.jpg"
+            "collection": "malas",
+            "custom_image": "shopify://shop_images/dfdeab92a9589f58f7c05546bb343eba5c86d200.jpg",
+            "show_title": true,
+            "custom_title": ""
           }
         }
       },
       "block_order": [
-        "image_cTidR7",
-        "image_bkxUXW"
+        "collection_XJ3gdm",
+        "collection_gbwiw4"
       ],
       "name": "Duo Images",
       "settings": {

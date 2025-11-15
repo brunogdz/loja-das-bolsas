@@ -11,38 +11,341 @@
   .pcm-line-{{ sid }}{width:75px;height:1px;background:{{ section.settings.header_line_color }}}
   .pcm-title-{{ sid }}{margin:0;font-size:24px;font-weight:700;color:{{ section.settings.header_text_color }}}
 
-  /* ===== “SUPERFÍCIE” ===== */
+  /* ===== "SUPERFÍCIE" ===== */
   .pcm-surface-{{ sid }}{background:{{ section.settings.cards_bg }};border-radius:14px;padding:18px 10px 22px;margin:0 auto 14px;max-width:1320px}
 
   /* ===== TRILHO ===== */
   .pcm-track-{{ sid }}{display:flex;flex-wrap:nowrap;gap:20px;justify-content:center;overflow:hidden}
 
-  /* ===== CARD ===== */
+  /* ===== CARD - Conforme Figma ===== */
   .pcm-card-{{ sid }}{
-    flex:0 0 182px;width:182px;height:392px;
-    display:flex;flex-direction:column;align-items:center;
-    border:1px solid #e6e6e6;background:#fff;border-radius:8px;overflow:hidden;position:relative
+    /* Dimensões exatas do Figma */
+    flex: 0 0 173px;
+    width: 173px;
+    height: 393px;
+    
+    /* Layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    /* Aparência conforme Figma */
+    border: 1px solid #EAEAEA;
+    background: #FFFFFF;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    padding: 1px;
+    box-sizing: border-box;
   }
-  .pcm-imgbox-{{ sid }}{width:172px;height:172px;margin:10px auto 0;background:#f5f5f5;overflow:hidden;border-radius:6px}
-  .pcm-imgbox-{{ sid }} img{width:100%;height:100%;object-fit:cover}
+  
+  /* Container da imagem com isolate para badge */
+  .pcm-imgbox-{{ sid }}{
+    width: 171px;
+    height: 172px;
+    background: #f5f5f5;
+    overflow: visible; /* IMPORTANTE: permite badge aparecer */
+    border-radius: 0;
+    flex: none;
+    align-self: stretch;
+    position: relative;
+    isolation: isolate;
+  }
+  
+  .pcm-imgbox-{{ sid }} img{
+    width: 171px;
+    height: 183px;
+    object-fit: cover;
+    position: relative;
+    z-index: 0;
+  }
 
-  /* badge de desconto */
+  /* Badge de desconto - CANTO SUPERIOR DIREITO conforme Figma */
   .pcm-badge-{{ sid }}{
-    position:absolute;top:12px;left:12px;width:56px;height:30px;border-radius:6px;
-    background:#FA2929;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;
-    font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;line-height:1
+    /* Posicionamento - conforme CSS do Figma */
+    position: absolute;
+    width: 56px;
+    height: 30px;
+    left: 115.25px; /* Posição do Figma para ficar à direita */
+    top: -0.11px;
+    
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    
+    /* Aparência */
+    background: #FA2929;
+    border-radius: 6px;
+    
+    /* Z-index */
+    z-index: 1;
+    flex: none;
+  }
+  
+  /* Container interno do badge */
+  .pcm-badge-content-{{ sid }}{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2px 0px 0px;
+    width: 34px;
+    height: 14px;
+  }
+  
+  .pcm-badge-{{ sid }} svg{
+    width: 12px;
+    height: 12px;
+    flex: none;
+  }
+  
+  .pcm-badge-{{ sid }} span:last-child{
+    width: 22px;
+    height: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    flex: none;
   }
 
-  /* ===== BODY ===== */
-  .pcm-body-{{ sid }}{padding:12px 16px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;flex-grow:1}
-  .pcm-name-{{ sid }}{font-size:16px;font-weight:700;color:#000;margin:6px 0 10px}
-  .pcm-pricewrap-{{ sid }}{margin-bottom:10px}
-  .pcm-compare-{{ sid }}{text-decoration:line-through;font-size:14px;color:#999;margin-bottom:4px}
-  .pcm-price-{{ sid }}{font-size:16px;font-weight:700;color:#000}
-  .pcm-descbox-{{ sid }}{height:114px;overflow:hidden;margin-bottom:16px}
-  .pcm-desc-{{ sid }}{font-size:14px;color:#666}
-  .pcm-btn-{{ sid }}{width:150px;height:36px;background:#414141;color:#fff;border:none;border-radius:4px;text-decoration:none;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s}
-  .pcm-btn-{{ sid }}:hover{background:#333}
+  /* ===== BODY - Conforme Figma ===== */
+  .pcm-body-{{ sid }}{
+    /* Padding conforme Figma */
+    padding: 12px 10px;
+    
+    /* Layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    /* Dimensões */
+    width: 171px;
+    height: 159px;
+    
+    flex: none;
+    align-self: stretch;
+    flex-grow: 1;
+  }
+  
+  /* Margin container para o título */
+  .pcm-name-margin-{{ sid }}{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px 0px 2px;
+    width: 151px;
+    max-height: 38px;
+    flex: none;
+    align-self: stretch;
+  }
+  
+  /* Nome do produto - conforme Figma */
+  .pcm-name-{{ sid }}{
+    /* Tipografia do Figma */
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 17px;
+    
+    /* Layout */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    /* Dimensões */
+    width: 151px;
+    max-height: 36px;
+    
+    /* Cor */
+    color: #000000;
+    margin: 0;
+    
+    /* Limita a 2 linhas */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    
+    flex: none;
+    align-self: stretch;
+  }
+  
+  /* Container de preços - conforme Figma */
+  .pcm-pricewrap-{{ sid }}{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px;
+    width: 151px;
+    min-height: 46px;
+    flex: none;
+    align-self: stretch;
+    padding-bottom: 12px;
+  }
+  
+  /* Preço riscado - conforme Figma */
+  .pcm-compare-{{ sid }}{
+    /* Posicionamento conforme Figma */
+    position: relative;
+    width: 60.18px;
+    height: 17px;
+    margin: 3px auto 0;
+    
+    /* Tipografia */
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 17px;
+    
+    /* Aparência */
+    text-decoration-line: line-through;
+    color: #000000;
+    
+    /* Layout */
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* Container do preço principal */
+  .pcm-price-container-{{ sid }}{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    position: relative;
+    height: 23px;
+    width: 100%;
+    margin-top: 0;
+  }
+  
+  /* Preço principal - conforme Figma */
+  .pcm-price-{{ sid }}{
+    width: 82px;
+    height: 23px;
+    
+    /* Tipografia */
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    
+    /* Layout */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    
+    flex: none;
+  }
+  
+  /* Paragraph container - conforme Figma */
+  .pcm-descbox-{{ sid }}{
+    position: relative;
+    height: 70px;
+    width: 151px;
+    margin-top: 0;
+    overflow: hidden;
+  }
+  
+  /* Texto da descrição - conforme Figma */
+  .pcm-desc-{{ sid }}{
+    position: relative;
+    width: 150px;
+    height: 69px;
+    
+    /* Tipografia */
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 10px;
+    
+    /* Layout */
+    align-items: center;
+    text-align: center;
+    color: #0A0A0A;
+    
+    /* Limita altura */
+    max-height: 70px;
+    overflow: hidden;
+    margin: 0;
+  }
+  
+  /* Container do botão - conforme Figma */
+  .pcm-btnwrap-{{ sid }}{
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 10px;
+    
+    /* Dimensões */
+    width: 171px;
+    height: 60px;
+    
+    /* Aparência */
+    background: #FFFFFF;
+    
+    flex: none;
+    align-self: stretch;
+  }
+  
+  /* Botão - conforme Figma */
+  .pcm-btn-{{ sid }}{
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    
+    /* Dimensões */
+    width: 151px;
+    height: 36px;
+    
+    /* Aparência */
+    background: #414141;
+    border-radius: 4px;
+    border: none;
+    
+    /* Tipografia */
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10.8px;
+    line-height: 15px;
+    color: #FFFFFF;
+    
+    /* Layout */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    cursor: pointer;
+    transition: background .2s;
+    
+    flex: none;
+    align-self: stretch;
+  }
+  
+  .pcm-btn-{{ sid }}:hover{
+    background: #333;
+  }
 
   /* ===== DOTS ===== */
   .pcm-dotsbar-{{ sid }}{width:100%;background:{{ section.settings.dots_bg }};padding:10px 0}
@@ -63,44 +366,76 @@
     .pcm-line-{{ sid }}{width:40px}
 
     .pcm-surface-{{ sid }}{
-    padding: 18px 0 22px 12px;
-    overflow: hidden;
-  }
+      padding: 18px 0 22px 12px;
+      overflow: hidden;
+    }
 
-  /* Track com scroll horizontal visível */
-  .pcm-track-{{ sid }}{
-    justify-content: flex-start;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding: 0 20px;
-    /* Esconde a scrollbar mas mantém funcionalidade */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
+    /* Track com scroll horizontal */
+    .pcm-track-{{ sid }}{
+      justify-content: flex-start;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 20px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
 
-  .pcm-track-{{ sid }}::-webkit-scrollbar {
-    display: none;
-  }
+    .pcm-track-{{ sid }}::-webkit-scrollbar {
+      display: none;
+    }
 
-  /* Cards no mobile - largura fixa menor */
-  .pcm-card-{{ sid }}{
-    flex: 0 0 260px;
-    width: 260px;
-    scroll-snap-align: start;
-  }
+    /* Cards no mobile */
+    .pcm-card-{{ sid }}{
+      flex: 0 0 260px;
+      width: 260px;
+      scroll-snap-align: start;
+    }
 
-  .pcm-imgbox-{{ sid }}{
-    width: 250px;
-    height: 250px;
-  }
+    .pcm-imgbox-{{ sid }}{
+      width: 250px;
+      height: 250px;
+    }
+    
+    .pcm-imgbox-{{ sid }} img{
+      width: 250px;
+      height: 250px;
+    }
+    
+    /* Badge no mobile - ajusta posição */
+    .pcm-badge-{{ sid }}{
+      left: auto;
+      right: 10px;
+      top: 10px;
+    }
+    
+    .pcm-body-{{ sid }}{
+      width: 260px;
+      padding: 16px;
+    }
+    
+    .pcm-name-margin-{{ sid }},
+    .pcm-name-{{ sid }},
+    .pcm-pricewrap-{{ sid }},
+    .pcm-descbox-{{ sid }}{
+      width: 100%;
+    }
+    
+    .pcm-btnwrap-{{ sid }}{
+      width: 260px;
+      padding: 16px;
+    }
+    
+    .pcm-btn-{{ sid }}{
+      width: 100%;
+    }
   }
 {% endstyle %}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
 
 <section class="pcm-{{ sid }}" {{ section.shopify_attributes }}>
   <div class="pcm-inner-{{ sid }}">
@@ -136,42 +471,53 @@
             {%- endif -%}
 
             <div class="pcm-card-{{ sid }}" data-card {{ block.shopify_attributes }}>
-              {%- if show_disc -%}
-                <div class="pcm-badge-{{ sid }}">
-                  <span aria-hidden="true">
-                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M0.146393 4.981C0.240157 4.88726 0.367311 4.83461 0.499893 4.83461C0.632475 4.83461 0.759629 4.88726 0.853393 4.981L4.83339 8.962V0.5C4.83339 0.367392 4.88607 0.240215 4.97984 0.146447C5.07361 0.0526784 5.20078 0 5.33339 0C5.466 0 5.59318 0.0526784 5.68695 0.146447C5.78071 0.240215 5.83339 0.367392 5.83339 0.5V8.961L9.81339 4.981C9.89619 4.89858 10.0052 4.84775 10.1216 4.83734C10.2379 4.82692 10.3543 4.85759 10.4504 4.924L10.5204 4.982C10.6141 5.07576 10.6668 5.20292 10.6668 5.3355C10.6668 5.46808 10.6141 5.59524 10.5204 5.689L5.68739 10.521C5.68122 10.5272 5.67488 10.5332 5.66839 10.539L5.64139 10.561C5.62748 10.5724 5.61278 10.5827 5.59739 10.592L5.56739 10.609C5.54218 10.6235 5.51533 10.6349 5.48739 10.643C5.46142 10.6517 5.43461 10.6578 5.40739 10.661C5.38656 10.6645 5.36551 10.6665 5.34439 10.667H5.32339C5.30298 10.6666 5.28261 10.6649 5.26239 10.662L5.33439 10.667C5.28318 10.6671 5.23226 10.6593 5.18339 10.644L5.16039 10.636L5.14539 10.63C5.12901 10.6235 5.11299 10.6162 5.09739 10.608L5.08239 10.598L5.07239 10.594C5.05463 10.5828 5.0376 10.5704 5.02139 10.557L5.00439 10.542C4.99554 10.5353 4.98719 10.5279 4.97939 10.52L0.146393 5.688C0.0526577 5.59424 0 5.46708 0 5.3345C0 5.20192 0.0526577 5.07476 0.146393 4.981Z" fill="white"/>
-                    </svg>
-                  </span>
-                  <span>-{{ disc_pct }}%</span>
-                </div>
-              {%- endif -%}
-
               <div class="pcm-imgbox-{{ sid }}">
                 {%- if p.featured_image -%}
                   <img
-                    src="{{ p.featured_image | image_url: width: 344, height: 344, crop: 'center' }}"
+                    src="{{ p.featured_image | image_url: width: 342, height: 366, crop: 'center' }}"
                     alt="{{ p.title | escape }}"
                     loading="lazy"
-                    width="172"
-                    height="172"
+                    width="171"
+                    height="183"
                   >
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag }}
                 {%- endif -%}
+                
+                {%- if show_disc -%}
+                  <div class="pcm-badge-{{ sid }}">
+                    <div class="pcm-badge-content-{{ sid }}">
+                      <span aria-hidden="true">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M0.146393 4.981C0.240157 4.88726 0.367311 4.83461 0.499893 4.83461C0.632475 4.83461 0.759629 4.88726 0.853393 4.981L4.83339 8.962V0.5C4.83339 0.367392 4.88607 0.240215 4.97984 0.146447C5.07361 0.0526784 5.20078 0 5.33339 0C5.466 0 5.59318 0.0526784 5.68695 0.146447C5.78071 0.240215 5.83339 0.367392 5.83339 0.5V8.961L9.81339 4.981C9.89619 4.89858 10.0052 4.84775 10.1216 4.83734C10.2379 4.82692 10.3543 4.85759 10.4504 4.924L10.5204 4.982C10.6141 5.07576 10.6668 5.20292 10.6668 5.3355C10.6668 5.46808 10.6141 5.59524 10.5204 5.689L5.68739 10.521C5.68122 10.5272 5.67488 10.5332 5.66839 10.539L5.64139 10.561C5.62748 10.5724 5.61278 10.5827 5.59739 10.592L5.56739 10.609C5.54218 10.6235 5.51533 10.6349 5.48739 10.643C5.46142 10.6517 5.43461 10.6578 5.40739 10.661C5.38656 10.6645 5.36551 10.6665 5.34439 10.667H5.32339C5.30298 10.6666 5.28261 10.6649 5.26239 10.662L5.33439 10.667C5.28318 10.6671 5.23226 10.6593 5.18339 10.644L5.16039 10.636L5.14539 10.63C5.12901 10.6235 5.11299 10.6162 5.09739 10.608L5.08239 10.598L5.07239 10.594C5.05463 10.5828 5.0376 10.5704 5.02139 10.557L5.00439 10.542C4.99554 10.5353 4.98719 10.5279 4.97939 10.52L0.146393 5.688C0.0526577 5.59424 0 5.46708 0 5.3345C0 5.20192 0.0526577 5.07476 0.146393 4.981Z" fill="white"/>
+                        </svg>
+                      </span>
+                      <span>{{ disc_pct }}%</span>
+                    </div>
+                  </div>
+                {%- endif -%}
               </div>
 
               <div class="pcm-body-{{ sid }}">
-                <h3 class="pcm-name-{{ sid }}">{{ p.title }}</h3>
+                <div class="pcm-name-margin-{{ sid }}">
+                  <h3 class="pcm-name-{{ sid }}">{{ p.title }}</h3>
+                </div>
+                
                 <div class="pcm-pricewrap-{{ sid }}">
                   {%- if show_disc -%}
                     <div class="pcm-compare-{{ sid }}">{{ _cmp | money }}</div>
                   {%- endif -%}
-                  <div class="pcm-price-{{ sid }}">{{ _price | money }}</div>
+                  <div class="pcm-price-container-{{ sid }}">
+                    <div class="pcm-price-{{ sid }}">{{ _price | money }}</div>
+                  </div>
                 </div>
+                
                 <div class="pcm-descbox-{{ sid }}">
                   <p class="pcm-desc-{{ sid }}">{{ p.description | strip_html | truncate: 150 }}</p>
                 </div>
+              </div>
+              
+              <div class="pcm-btnwrap-{{ sid }}">
                 <a class="pcm-btn-{{ sid }}" href="{{ p.url }}">{{ section.settings.button_text }}</a>
               </div>
             </div>
@@ -181,11 +527,34 @@
         {%- unless has_items -%}
           {%- for i in (1..6) -%}
             <div class="pcm-card-{{ sid }}" data-card>
-              <div class="pcm-imgbox-{{ sid }}">{{ 'product-1' | placeholder_svg_tag }}</div>
+              <div class="pcm-imgbox-{{ sid }}">
+                {{ 'product-1' | placeholder_svg_tag }}
+                <div class="pcm-badge-{{ sid }}">
+                  <div class="pcm-badge-content-{{ sid }}">
+                    <span aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.146393 4.981C0.240157 4.88726 0.367311 4.83461 0.499893 4.83461C0.632475 4.83461 0.759629 4.88726 0.853393 4.981L4.83339 8.962V0.5C4.83339 0.367392 4.88607 0.240215 4.97984 0.146447C5.07361 0.0526784 5.20078 0 5.33339 0C5.466 0 5.59318 0.0526784 5.68695 0.146447C5.78071 0.240215 5.83339 0.367392 5.83339 0.5V8.961L9.81339 4.981C9.89619 4.89858 10.0052 4.84775 10.1216 4.83734C10.2379 4.82692 10.3543 4.85759 10.4504 4.924L10.5204 4.982C10.6141 5.07576 10.6668 5.20292 10.6668 5.3355C10.6668 5.46808 10.6141 5.59524 10.5204 5.689L5.68739 10.521C5.68122 10.5272 5.67488 10.5332 5.66839 10.539L5.64139 10.561C5.62748 10.5724 5.61278 10.5827 5.59739 10.592L5.56739 10.609C5.54218 10.6235 5.51533 10.6349 5.48739 10.643C5.46142 10.6517 5.43461 10.6578 5.40739 10.661C5.38656 10.6645 5.36551 10.6665 5.34439 10.667H5.32339C5.30298 10.6666 5.28261 10.6649 5.26239 10.662L5.33439 10.667C5.28318 10.6671 5.23226 10.6593 5.18339 10.644L5.16039 10.636L5.14539 10.63C5.12901 10.6235 5.11299 10.6162 5.09739 10.608L5.08239 10.598L5.07239 10.594C5.05463 10.5828 5.0376 10.5704 5.02139 10.557L5.00439 10.542C4.99554 10.5353 4.98719 10.5279 4.97939 10.52L0.146393 5.688C0.0526577 5.59424 0 5.46708 0 5.3345C0 5.20192 0.0526577 5.07476 0.146393 4.981Z" fill="white"/>
+                      </svg>
+                    </span>
+                    <span>8%</span>
+                  </div>
+                </div>
+              </div>
               <div class="pcm-body-{{ sid }}">
-                <h3 class="pcm-name-{{ sid }}">Product Title</h3>
-                <div class="pcm-pricewrap-{{ sid }}"><div class="pcm-price-{{ sid }}">R$ 99,00</div></div>
-                <div class="pcm-descbox-{{ sid }}"><p class="pcm-desc-{{ sid }}">Product description…</p></div>
+                <div class="pcm-name-margin-{{ sid }}">
+                  <h3 class="pcm-name-{{ sid }}">Mala Ref</h3>
+                </div>
+                <div class="pcm-pricewrap-{{ sid }}">
+                  <div class="pcm-compare-{{ sid }}">R$ 240,00</div>
+                  <div class="pcm-price-container-{{ sid }}">
+                    <div class="pcm-price-{{ sid }}">R$ 220,00</div>
+                  </div>
+                </div>
+                <div class="pcm-descbox-{{ sid }}">
+                  <p class="pcm-desc-{{ sid }}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec dolor at diam malesuada</p>
+                </div>
+              </div>
+              <div class="pcm-btnwrap-{{ sid }}">
                 <a class="pcm-btn-{{ sid }}" href="#">{{ section.settings.button_text }}</a>
               </div>
             </div>
@@ -217,7 +586,7 @@
           return 1;
         }
         const container = track.clientWidth || root.clientWidth;
-        const cardW = 182,
+        const cardW = 173, // Largura ajustada
           gap = 20;
         let fit = Math.floor((container + gap) / (cardW + gap));
         if (fit < 1) fit = 1;
@@ -235,41 +604,20 @@
         }
       }
 
-      {% comment %} function show(page) {
-        current = page;
-        const start = (page - 1) * perPage;
-        const end = start + perPage;
-
-        if (window.innerWidth < 750 && cards[start]) {
-          const cardWidth = 260 + 20; // largura do card + gap
-          track.scrollTo({
-            left: start * cardWidth,
-            behavior: 'smooth',
-          });
-        }
-
-        cards.forEach((el, idx) => {
-          el.style.display = idx >= start && idx < end ? 'flex' : 'none';
-        });
-        Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('is-active', i === page - 1));
-      } {% endcomment %}
       function show(page) {
         current = page;
         const start = (page - 1) * perPage;
         const end = start + perPage;
 
-        // No mobile, faz scroll mas NÃO esconde cards
         if (window.innerWidth < 750) {
           if (cards[start]) {
-            const cardWidth = 260 + 20; // largura do card + gap
+            const cardWidth = 260 + 20;
             track.scrollTo({
               left: start * cardWidth,
               behavior: 'smooth',
             });
           }
-          // ⚠️ NÃO esconde cards no mobile - REMOVA a linha abaixo do if
         } else {
-          // Desktop/tablet: esconde cards
           cards.forEach((el, idx) => {
             el.style.display = idx >= start && idx < end ? 'flex' : 'none';
           });
@@ -283,7 +631,6 @@
         totalPages = Math.max(1, Math.ceil(cards.length / perPage));
         if (current > totalPages) current = totalPages;
 
-        // No mobile, garante que todos os cards estão visíveis
         if (window.innerWidth < 750) {
           cards.forEach(el => el.style.display = 'flex');
         }
