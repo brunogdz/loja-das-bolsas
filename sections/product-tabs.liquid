@@ -1,0 +1,377 @@
+{%- assign sid = section.id | replace: '_', '' | downcase -%}
+
+{%- assign show_description = false -%}
+{%- assign show_warranty = false -%}
+{%- assign show_payment = false -%}
+
+{%- if product.metafields.custom.descricao_geral != blank or product.description != blank -%}
+  {%- assign show_description = true -%}
+{%- endif -%}
+
+{%- if product.metafields.custom.garantia != blank -%}
+  {%- assign show_warranty = true -%}
+{%- endif -%}
+
+{%- if product.metafields.custom.pagamento != blank -%}
+  {%- assign show_payment = true -%}
+{%- endif -%}
+
+<div class="product-tabs-{{ sid }}">
+  <div class="tabs-container-{{ sid }}">
+    <div class="tabs-nav-{{ sid }}" role="tablist">
+      {%- if show_description -%}
+        <button 
+          class="tab-button-{{ sid }} active" 
+          data-tab="description"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-description-{{ sid }}"
+        >
+          {{ section.settings.tab_description_title }}
+        </button>
+      {%- endif -%}
+
+      {%- if show_warranty -%}
+        <button 
+          class="tab-button-{{ sid }}" 
+          data-tab="warranty"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-warranty-{{ sid }}"
+        >
+          {{ section.settings.tab_warranty_title }}
+        </button>
+      {%- endif -%}
+
+      {%- if show_payment -%}
+        <button 
+          class="tab-button-{{ sid }}" 
+          data-tab="payment"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-payment-{{ sid }}"
+        >
+          {{ section.settings.tab_payment_title }}
+        </button>
+      {%- endif -%}
+    </div>
+
+    <div class="tabs-line-{{ sid }}"></div>
+
+    <div class="tabs-content-{{ sid }}">
+      {%- if show_description -%}
+        <div 
+          class="tab-panel-{{ sid }} active" 
+          id="panel-description-{{ sid }}"
+          role="tabpanel"
+        >
+          <div class="tab-panel-inner-{{ sid }}">
+            {%- if product.metafields.custom.descricao_geral != blank -%}
+              {{ product.metafields.custom.descricao_geral }}
+            {%- else -%}
+              {{ product.description }}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if show_warranty -%}
+        <div 
+          class="tab-panel-{{ sid }}" 
+          id="panel-warranty-{{ sid }}"
+          role="tabpanel"
+        >
+          <div class="tab-panel-inner-{{ sid }}">
+            {{ product.metafields.custom.garantia }}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if show_payment -%}
+        <div 
+          class="tab-panel-{{ sid }}" 
+          id="panel-payment-{{ sid }}"
+          role="tabpanel"
+        >
+          <div class="tab-panel-inner-{{ sid }}">
+            {{ product.metafields.custom.pagamento }}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-tabs-{{ sid }} {
+    width: 100%;
+    max-width: 1440px;
+    margin: 60px auto;
+    padding: 0 20px;
+  }
+
+  .tabs-container-{{ sid }} {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .tabs-nav-{{ sid }} {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 61px;
+    height: 76px;
+    position: relative;
+  }
+
+  .tab-button-{{ sid }} {
+    width: 150px;
+    height: 53px;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #000000;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .tab-button-{{ sid }}:hover {
+    opacity: 0.7;
+  }
+
+  .tab-button-{{ sid }}.active {
+    font-weight: 600;
+  }
+
+  .tab-button-{{ sid }}.active::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #000000;
+    z-index: 2;
+  }
+
+  .tabs-line-{{ sid }} {
+    width: 100%;
+    max-width: 1160px;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    position: relative;
+    top: -22px;
+  }
+
+  .tabs-content-{{ sid }} {
+    width: 100%;
+    max-width: 994px;
+    margin: 0 auto;
+    min-height: 201px;
+  }
+
+  .tab-panel-{{ sid }} {
+    display: none;
+    opacity: 0;
+    animation: fadeOut-{{ sid }} 0.2s ease;
+  }
+
+  .tab-panel-{{ sid }}.active {
+    display: block;
+    opacity: 1;
+    animation: fadeIn-{{ sid }} 0.3s ease;
+  }
+
+  .tab-panel-inner-{{ sid }} {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #0A0A0A;
+  }
+
+  @keyframes fadeIn-{{ sid }} {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut-{{ sid }} {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 989px) {
+    .product-tabs-{{ sid }} {
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+
+    .tabs-nav-{{ sid }} {
+      flex-wrap: wrap;
+      gap: 12px;
+      height: auto;
+      padding: 20px 0;
+    }
+
+    .tab-button-{{ sid }} {
+      width: calc(50% - 6px);
+      height: 48px;
+      font-size: 14px;
+    }
+
+    .tab-button-{{ sid }}.active::after {
+      bottom: -6px;
+      height: 3px;
+    }
+
+    .tabs-line-{{ sid }} {
+      top: -10px;
+    }
+
+    .tabs-content-{{ sid }} {
+      padding: 0 10px;
+    }
+
+    .tab-panel-inner-{{ sid }} {
+      font-size: 13px;
+      line-height: 20px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .tabs-nav-{{ sid }} {
+      gap: 8px;
+    }
+
+    .tab-button-{{ sid }} {
+      width: calc(50% - 4px);
+      height: 44px;
+      font-size: 13px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  const sectionId = '{{ sid }}';
+  const tabButtons = document.querySelectorAll('.tab-button-' + sectionId);
+  const tabPanels = document.querySelectorAll('.tab-panel-' + sectionId);
+
+  if (tabButtons.length === 0 || tabPanels.length === 0) return;
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+
+      tabButtons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
+
+      tabPanels.forEach(panel => {
+        panel.classList.remove('active');
+      });
+
+      this.classList.add('active');
+      this.setAttribute('aria-selected', 'true');
+
+      const targetPanel = document.getElementById('panel-' + targetTab + '-' + sectionId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+    });
+  });
+
+  tabButtons.forEach((button, index) => {
+    button.addEventListener('keydown', function(e) {
+      let newIndex;
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        newIndex = (index + 1) % tabButtons.length;
+        tabButtons[newIndex].click();
+        tabButtons[newIndex].focus();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        newIndex = (index - 1 + tabButtons.length) % tabButtons.length;
+        tabButtons[newIndex].click();
+        tabButtons[newIndex].focus();
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product Tabs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Títulos das Tabs"
+    },
+    {
+      "type": "text",
+      "id": "tab_description_title",
+      "label": "Título - Descrição Geral",
+      "default": "Descrição Geral",
+      "info": "Só aparece se o produto tiver descrição ou metafield 'descricao_geral'"
+    },
+    {
+      "type": "text",
+      "id": "tab_warranty_title",
+      "label": "Título - Garantia",
+      "default": "Garantia",
+      "info": "Só aparece se o produto tiver metafield 'garantia'"
+    },
+    {
+      "type": "text",
+      "id": "tab_payment_title",
+      "label": "Título - Pagamento",
+      "default": "Pagamento",
+      "info": "Só aparece se o produto tiver metafield 'pagamento'"
+    },
+    {
+      "type": "header",
+      "content": "Informações"
+    },
+    {
+      "type": "paragraph",
+      "content": "Configure os metafields em: Settings → Custom Data → Products"
+    },
+    {
+      "type": "paragraph",
+      "content": "Metafields: custom.descricao_geral, custom.garantia, custom.pagamento"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Tabs"
+    }
+  ]
+}
+{% endschema %}
