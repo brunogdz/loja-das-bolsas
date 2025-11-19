@@ -1,0 +1,370 @@
+{% comment %}
+  Widget Flutuante de Chat - WhatsApp e Instagram
+  Uso: {% render 'floating-chat-widget' %}
+{% endcomment %}
+
+<div class="floating-chat-widget" id="floatingChatWidget">
+  <!-- Botão Flutuante Principal -->
+  <button class="chat-widget-button" id="chatWidgetButton" aria-label="Abrir menu de chat">
+    <svg class="chat-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 12H8.009M11.991 12H12M15.991 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22Z" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <!-- Menu de Opções -->
+  <div class="chat-widget-menu" id="chatWidgetMenu">
+    <div class="chat-menu-content">
+      <!-- Título -->
+      <div class="chat-menu-header">
+        <h3>Converse Conosco!</h3>
+        <p>Escolha seu canal preferido</p>
+      </div>
+
+      <!-- Opções de Chat -->
+      <div class="chat-options">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/5527997439137?text=Olá!%20Vi%20a%20loja%20online%20e%20gostaria%20de%20saber%20mais." 
+           class="chat-option chat-option--whatsapp" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Conversar no WhatsApp">
+          <div class="chat-option-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.477 2 2 6.477 2 12C2 13.89 2.525 15.66 3.438 17.168L2.546 20.2C2.492 20.389 2.542 20.593 2.677 20.733C2.782 20.842 2.925 20.9 3.071 20.9C3.118 20.9 3.166 20.894 3.213 20.882L6.406 20.078C7.848 20.944 9.448 21.4 11.1 21.4C16.523 21.4 20.9 16.923 20.9 11.4C20.9 5.877 16.423 2 11.9 2H12Z" fill="#25D366"/>
+              <path d="M16.735 14.921C16.505 14.806 15.375 14.251 15.165 14.176C14.955 14.101 14.8 14.063 14.645 14.293C14.49 14.523 14.055 15.038 13.92 15.193C13.785 15.348 13.65 15.368 13.42 15.253C13.19 15.138 12.465 14.898 11.605 14.133C10.935 13.538 10.485 12.803 10.35 12.573C10.215 12.343 10.335 12.218 10.45 12.103C10.555 11.998 10.68 11.828 10.795 11.693C10.91 11.558 10.95 11.463 11.025 11.308C11.1 11.153 11.0625 11.018 11.005 10.903C10.9475 10.788 10.4975 9.658 10.3075 9.198C10.1225 8.753 9.9325 8.813 9.7925 8.806C9.6575 8.799 9.5025 8.798 9.3475 8.798C9.1925 8.798 8.9425 8.856 8.7325 9.086C8.5225 9.316 7.9275 9.871 7.9275 11.001C7.9275 12.131 8.7525 13.221 8.8675 13.376C8.9825 13.531 10.4825 15.858 12.8025 16.863C13.3625 17.108 13.8025 17.253 14.1475 17.363C14.7075 17.538 15.2175 17.513 15.6225 17.453C16.0725 17.387 16.9825 16.883 17.1725 16.333C17.3625 15.783 17.3625 15.313 17.3025 15.213C17.2425 15.113 17.0875 15.056 16.8575 14.941L16.735 14.921Z" fill="white"/>
+            </svg>
+          </div>
+          <div class="chat-option-content">
+            <span class="chat-option-title">WhatsApp</span>
+            <span class="chat-option-subtitle">Resposta rápida</span>
+          </div>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/lojadasbolsasonline" 
+           class="chat-option chat-option--instagram" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Seguir no Instagram">
+          <div class="chat-option-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#instagram-gradient)"/>
+              <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
+              <defs>
+                <linearGradient id="instagram-gradient" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FD5"/>
+                  <stop offset="0.5" stop-color="#FF543E"/>
+                  <stop offset="1" stop-color="#C837AB"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="chat-option-content">
+            <span class="chat-option-title">Instagram</span>
+            <span class="chat-option-subtitle">Nos siga!</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ===================================
+   FLOATING CHAT WIDGET - ESTILOS
+   =================================== */
+
+.floating-chat-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Botão Principal */
+.chat-widget-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(102, 126, 234, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-widget-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(102, 126, 234, 0.4);
+}
+
+.chat-widget-button:active {
+  transform: scale(0.95);
+}
+
+/* Animação de pulso */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(102, 126, 234, 0.7);
+  }
+  70% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 10px rgba(102, 126, 234, 0);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(102, 126, 234, 0);
+  }
+}
+
+.chat-widget-button {
+  animation: pulse 2s infinite;
+}
+
+.chat-widget-button.active {
+  animation: none;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Ícones */
+.chat-icon,
+.close-icon {
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+.close-icon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0);
+}
+
+.chat-widget-button.active .chat-icon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0);
+}
+
+.chat-widget-button.active .close-icon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+/* Menu de Opções */
+.chat-widget-menu {
+  position: absolute;
+  bottom: 75px;
+  right: 0;
+  width: 300px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.chat-widget-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.chat-menu-content {
+  padding: 20px;
+}
+
+/* Header do Menu */
+.chat-menu-header {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.chat-menu-header h3 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.chat-menu-header p {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Opções de Chat */
+.chat-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-option {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: #f8f9fa;
+  border: 2px solid transparent;
+}
+
+.chat-option:hover {
+  transform: translateX(4px);
+  border-color: currentColor;
+}
+
+.chat-option--whatsapp {
+  color: #25D366;
+}
+
+.chat-option--whatsapp:hover {
+  background: rgba(37, 211, 102, 0.1);
+}
+
+.chat-option--instagram {
+  color: #E4405F;
+}
+
+.chat-option--instagram:hover {
+  background: rgba(228, 64, 95, 0.1);
+}
+
+.chat-option-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.chat-option-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.chat-option-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+.chat-option-subtitle {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .floating-chat-widget {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .chat-widget-button {
+    width: 56px;
+    height: 56px;
+  }
+
+  .chat-widget-menu {
+    width: calc(100vw - 32px);
+    max-width: 320px;
+    right: 0;
+  }
+}
+
+/* Acessibilidade - Modo escuro */
+@media (prefers-color-scheme: dark) {
+  .chat-widget-menu {
+    background: #2d2d2d;
+  }
+
+  .chat-menu-header {
+    border-bottom-color: #404040;
+  }
+
+  .chat-menu-header h3 {
+    color: #ffffff;
+  }
+
+  .chat-menu-header p {
+    color: #b0b0b0;
+  }
+
+  .chat-option {
+    background: #3d3d3d;
+  }
+
+  .chat-option-title {
+    color: #ffffff;
+  }
+
+  .chat-option-subtitle {
+    color: #b0b0b0;
+  }
+}
+</style>
+
+<script>
+// ===================================
+// FLOATING CHAT WIDGET - JAVASCRIPT
+// ===================================
+document.addEventListener('DOMContentLoaded', function() {
+  const chatButton = document.getElementById('chatWidgetButton');
+  const chatMenu = document.getElementById('chatWidgetMenu');
+  
+  if (!chatButton || !chatMenu) return;
+
+  // Toggle do menu
+  chatButton.addEventListener('click', function(e) {
+    e.stopPropagation();
+    chatButton.classList.toggle('active');
+    chatMenu.classList.toggle('active');
+  });
+
+  // Fechar ao clicar fora
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.floating-chat-widget')) {
+      chatButton.classList.remove('active');
+      chatMenu.classList.remove('active');
+    }
+  });
+
+  // Fechar com ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      chatButton.classList.remove('active');
+      chatMenu.classList.remove('active');
+    }
+  });
+
+  // Analytics (opcional) - rastrear cliques
+  const chatOptions = document.querySelectorAll('.chat-option');
+  chatOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      const platform = this.classList.contains('chat-option--whatsapp') ? 'WhatsApp' : 'Instagram';
+      console.log(`Chat iniciado via: ${platform}`);
+      
+      // Se você usa Google Analytics ou outro, adicione aqui:
+      // gtag('event', 'chat_click', { platform: platform });
+    });
+  });
+});
+</script>
