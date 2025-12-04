@@ -223,10 +223,16 @@
     "product_carousel_manual_Y6rLFC": {
       "type": "product-carousel-manual",
       "blocks": {
-        "item_YeT6CG": {
+        "item_YGFfaz": {
           "type": "item",
           "settings": {
-            "product": "weekender-duffel"
+            "product": "bolsa-palha-kerida"
+          }
+        },
+        "item_L6cF9X": {
+          "type": "item",
+          "settings": {
+            "product": "bolsa-bel"
           }
         },
         "item_C8Hfw8": {
@@ -253,12 +259,6 @@
             "product": "sling-belt-bag"
           }
         },
-        "item_Lgi4T9": {
-          "type": "item",
-          "settings": {
-            "product": "weekender-duffel"
-          }
-        },
         "item_biai8c": {
           "type": "item",
           "settings": {
@@ -267,12 +267,12 @@
         }
       },
       "block_order": [
-        "item_YeT6CG",
+        "item_YGFfaz",
+        "item_L6cF9X",
         "item_C8Hfw8",
         "item_DBPnfx",
         "item_hXjybj",
         "item_xcqG67",
-        "item_Lgi4T9",
         "item_biai8c"
       ],
       "name": "Prod Carousel Manual",
